@@ -6,9 +6,10 @@ defmodule Updtr.Repo.Migrations.CreateVerifications do
       add :id, :binary_id, primary_key: true
       add :user_id, references(:users, type: :binary_id)
       add :password_reset_token, :string, null: false
+      add :reset_token_used, :boolean, null: false, default: false
 
       add :valid_until, :naive_datetime,
-        default: fragment("now() - interval '1 hour'"),
+        default: fragment("now() + interval '1 hour'"),
         null: false
 
       timestamps()

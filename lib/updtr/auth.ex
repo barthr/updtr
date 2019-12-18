@@ -7,6 +7,7 @@ defmodule Updtr.Auth do
   alias Updtr.Repo
 
   alias Updtr.Auth.User
+  alias Updtr.Auth.PasswordReset
 
   @doc """
   Returns the list of users.
@@ -121,9 +122,46 @@ defmodule Updtr.Auth do
     end
   end
 
-  def reset_password(user) do
-    password_reset =
-      %PasswordReset{}
-      |> Updtr.Au
+  defp random_string(length) do
+    :crypto.strong_rand_bytes(length) |> Base.url_encode64() |> binary_part(0, length)
+  end
+
+  def request_password_reset(user_id) do
+    reset_token = random_string(24)
+
+    %PasswordReset{}
+    |> PasswordReset.changeset(%{user_id: user_id, password_reset_token: reset_token})
+    |> Repo.insert()
+  end
+
+  defp update_user_password(nil, _new_password) do
+    {:error, "invalid reset token"}
+  end
+
+  defp update_user_password(%PasswordReset{reset_token_used: true}, _new_password) do
+    {:error, "reset token is already used"}
+  end
+
+  defp update_user_password(%PasswordReset{} = reset_password, new_password) do
+    Repo.transaction(fn ->
+      reset_password
+      |> PasswordReset.changeset(%{reset_token_used: true})
+      |> Repo.update()
+
+      reset_password.user
+      |> update_user(%{password: new_password})
+    end)
+  end
+
+  def reset_password(reset_token, new_password) do
+    query =
+      from p in PasswordReset,
+        where: p.password_reset_token == ^reset_token,
+        where: p.valid_until > ^DateTime.utc_now(),
+        preload: [:user],
+        select: p
+
+    Repo.one(query)
+    |> update_user_password(new_password)
   end
 end

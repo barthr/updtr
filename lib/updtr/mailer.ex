@@ -2,6 +2,8 @@ defmodule Updtr.Mailer do
   use Bamboo.Mailer, otp_app: :updtr
   import Bamboo.Email
 
+  @url Application.get_env(:updtr, Updtr.Mailer)[:base_url]
+
   def registration_mail(to, link) do
     new_email(
       to: to,
@@ -12,12 +14,13 @@ defmodule Updtr.Mailer do
     )
   end
 
-  def reset_password(to, link) do
+  def reset_password(to, token) do
     new_email(
       to: to,
       from: "no-reply@updtr.io",
       subject: "Reset password",
-      text_body: "Click the following link to reset your password: #{link}"
+      text_body:
+        "Click the following link to reset your password: #{@url}/reset-password?token=#{token}"
     )
   end
 end
