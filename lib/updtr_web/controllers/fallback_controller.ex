@@ -13,6 +13,13 @@ defmodule UpdtrWeb.FallbackController do
     |> render(:"404")
   end
 
+  def call(conn, {:error, :unauthorized}) do
+    conn
+    |> put_status(:unauthorized)
+    |> put_view(UpdtrWeb.ErrorView)
+    |> render(:"401")
+  end
+
   def call(conn, {:error, %Ecto.Changeset{}}) do
     conn
     |> put_status(:unprocessable_entity)

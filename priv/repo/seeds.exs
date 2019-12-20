@@ -9,3 +9,9 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+%Updtr.Accounts.User{}
+|> Updtr.Accounts.User.changeset(%{
+  email: "test",
+  password: "test"
+})
+|> Updtr.Repo.insert!()

@@ -1,8 +1,8 @@
 defmodule UpdtrWeb.UserControllerTest do
   use UpdtrWeb.ConnCase
 
-  alias Updtr.Auth
-  alias Updtr.Auth.User
+  alias Updtr.Accounts
+  alias Updtr.Accounts.User
   alias Plug.Test
 
   import UpdtrWeb.Auth.Guardian
@@ -25,12 +25,12 @@ defmodule UpdtrWeb.UserControllerTest do
   }
 
   def fixture(:user) do
-    {:ok, user} = Auth.create_user(@create_attrs)
+    {:ok, user} = Accounts.create_user(@create_attrs)
     user
   end
 
   def fixture(:current_user) do
-    {:ok, current_user} = Auth.create_user(@current_user_attrs)
+    {:ok, current_user} = Accounts.create_user(@current_user_attrs)
     current_user
   end
 

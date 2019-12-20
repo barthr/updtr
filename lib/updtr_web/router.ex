@@ -16,7 +16,7 @@ defmodule UpdtrWeb.Router do
   end
 
   scope "/api", UpdtrWeb do
-    pipe_through [:api, :auth]
+    pipe_through [:api]
     post "/users/login", UserController, :sign_in
   end
 

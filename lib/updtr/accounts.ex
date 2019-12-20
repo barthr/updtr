@@ -1,4 +1,4 @@
-defmodule Updtr.Auth do
+defmodule Updtr.Accounts do
   @moduledoc """
   The Auth context.
   """
@@ -6,8 +6,8 @@ defmodule Updtr.Auth do
   import Ecto.Query, warn: false
   alias Updtr.Repo
 
-  alias Updtr.Auth.User
-  alias Updtr.Auth.PasswordReset
+  alias Updtr.Accounts.User
+  alias Updtr.Accounts.PasswordReset
 
   @doc """
   Returns the list of users.

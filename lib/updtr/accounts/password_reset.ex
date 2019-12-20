@@ -1,8 +1,8 @@
-defmodule Updtr.Auth.PasswordReset do
+defmodule Updtr.Accounts.PasswordReset do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Updtr.Auth.User
+  alias Updtr.Accounts.User
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id

@@ -2,8 +2,8 @@ use Mix.Config
 
 # Configure your database
 config :updtr, Updtr.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "updtr",
+  password: "updtr",
   database: "updtr_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
