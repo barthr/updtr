@@ -4,7 +4,7 @@ use Mix.Config
 config :updtr, Updtr.Repo,
   username: "postgres",
   password: "postgres",
-  database: "my_app_dev",
+  database: "updtr_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
