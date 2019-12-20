@@ -21,6 +21,8 @@ defmodule Updtr.Accounts.User do
     user
     |> cast(attrs, [:email, :is_active, :password])
     |> validate_required([:email, :is_active, :password])
+    |> validate_length(:password, min: 10, max: 64)
+    |> validate_format(:email, ~r/@/)
     |> unique_constraint(:email)
     |> put_password_hash()
   end
