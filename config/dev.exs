@@ -22,6 +22,8 @@ config :updtr, UpdtrWeb.Endpoint,
   check_origin: false,
   watchers: []
 
+config :updtr, Updtr.Mailer, adapter: Bamboo.LocalAdapter
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

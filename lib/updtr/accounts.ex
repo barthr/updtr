@@ -126,12 +126,31 @@ defmodule Updtr.Accounts do
     :crypto.strong_rand_bytes(length) |> Base.url_encode64() |> binary_part(0, length)
   end
 
-  def request_password_reset(user_id) do
+  def request_password_reset(email) do
     reset_token = random_string(24)
 
-    %PasswordReset{}
-    |> PasswordReset.changeset(%{user_id: user_id, password_reset_token: reset_token})
-    |> Repo.insert()
+    case Repo.one(from u in User, where: u.email == ^email) do
+      nil ->
+        {:error, "request email #{email} not found"}
+
+      user ->
+        %PasswordReset{}
+        |> PasswordReset.changeset(%{user_id: user.id, password_reset_token: reset_token})
+        |> Repo.insert()
+        |> send_password_reset_mail
+    end
+  end
+
+  defp send_password_reset_mail({:ok, %PasswordReset{user_id: id, password_reset_token: token}}) do
+    user = get_user!(id)
+
+    with Updtr.Mailer.reset_password(user.email, token) do
+      {:ok, :email_send}
+    end
+  end
+
+  defp send_password_reset_mail({:error, _message}) do
+    {:ok, :email_send}
   end
 
   defp update_user_password(nil, _new_password) do

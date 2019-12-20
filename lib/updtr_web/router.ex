@@ -1,6 +1,10 @@
 defmodule UpdtrWeb.Router do
   use UpdtrWeb, :router
 
+  if Mix.env() == :dev do
+    forward "/sent_emails", Bamboo.SentEmailViewerPlug
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
     plug :fetch_session
@@ -10,18 +14,14 @@ defmodule UpdtrWeb.Router do
     plug UpdtrWeb.Auth.Pipeline
   end
 
-  # We use ensure_auth to fail if there is no one logged in
-  pipeline :ensure_auth do
-    plug Guardian.Plug.EnsureAuthenticated
-  end
-
   scope "/api", UpdtrWeb do
     pipe_through [:api]
     post "/users/login", UserController, :sign_in
+    post "/users/reset-password", PasswordResetController, :request_reset_password
   end
 
   scope "/api", UpdtrWeb do
-    pipe_through [:api, :auth, :ensure_auth]
+    pipe_through [:api, :auth]
     resources "/users", UserController, except: [:new, :edit]
   end
 end

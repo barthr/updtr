@@ -26,6 +26,8 @@ config :updtr, UpdtrWeb.Auth.Guardian,
   issuer: "updtr",
   secret_key: "ikhJW1aL/uzsZQQSxqQmyu50g+86IBEkTxMJm5zfEvLMUWE9Io0RyM8dc1kR9Sj/"
 
+config :updtr, Updtr.Mailer, base_url: "http://localhost:4000"
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
