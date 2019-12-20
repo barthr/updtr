@@ -2,8 +2,8 @@ use Mix.Config
 
 # Configure your database
 config :updtr, Updtr.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "updtr",
+  password: "updtr",
   database: "updtr_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
