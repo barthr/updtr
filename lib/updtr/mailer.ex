@@ -14,7 +14,7 @@ defmodule Updtr.Mailer do
           token
         }"
     )
-    |> deliver_later()
+    |> deliver_now()
   end
 
   def reset_password(to, token) do

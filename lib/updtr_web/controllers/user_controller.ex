@@ -55,6 +55,14 @@ defmodule UpdtrWeb.UserController do
     end
   end
 
+  def sign_up(conn, %{"email" => email, "password" => password}) do
+    with {:ok, _message} <- Accounts.sign_up(email, password) do
+      conn
+      |> put_status(:created)
+      |> render("sign_up.json", message: "Succesfully signed up, see your email for instructions")
+    end
+  end
+
   defp authenticate_valid_action(conn, _) do
     current_user = Guardian.Plug.current_resource(conn)
 

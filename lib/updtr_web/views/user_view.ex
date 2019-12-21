@@ -14,6 +14,10 @@ defmodule UpdtrWeb.UserView do
     %{id: user.id, email: user.email, is_active: user.is_active}
   end
 
+  def render("sign_up.json", %{message: message}) do
+    %{data: %{message: message}}
+  end
+
   def render("sign_in.json", %{token: token, user: user}) do
     %{
       data: %{

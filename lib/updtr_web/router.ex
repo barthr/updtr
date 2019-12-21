@@ -17,6 +17,8 @@ defmodule UpdtrWeb.Router do
   scope "/api", UpdtrWeb do
     pipe_through [:api]
     post "/users/login", UserController, :sign_in
+    post "/users/signup", UserController, :sign_up
+
     post "/users/request-password-reset", PasswordResetController, :request_reset_password
     post "/users/reset-password", PasswordResetController, :reset_password
   end
