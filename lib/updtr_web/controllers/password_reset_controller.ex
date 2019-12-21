@@ -5,6 +5,8 @@ defmodule UpdtrWeb.PasswordResetController do
 
   require Logger
 
+  action_fallback UpdtrWeb.FallbackController
+
   def request_reset_password(conn, %{"email" => email}) do
     case Accounts.request_password_reset(email) do
       {:error, message} ->
@@ -18,7 +20,16 @@ defmodule UpdtrWeb.PasswordResetController do
     |> send_resp(204, "")
   end
 
-  def handle_reset_password(conn, _params) do
-    conn
+  def reset_password(conn, %{"token" => token, "new_password" => new_password}) do
+    with {:ok, user} = Accounts.reset_password(token, new_password) do
+      conn
+      |> put_view(UpdtrWeb.UserView)
+      |> render("show.json", user: user)
+
+      # {:error, message} ->
+      #   conn
+      #   |> put_status(:bad_request)
+      #   |> render("token_error.json", message: message)
+    end
   end
 end

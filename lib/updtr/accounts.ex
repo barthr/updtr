@@ -5,6 +5,7 @@ defmodule Updtr.Accounts do
 
   import Ecto.Query, warn: false
   alias Updtr.Repo
+  alias Ecto.Multi
 
   alias Updtr.Accounts.User
   alias Updtr.Accounts.PasswordReset
@@ -162,14 +163,21 @@ defmodule Updtr.Accounts do
   end
 
   defp update_user_password(%PasswordReset{} = reset_password, new_password) do
-    Repo.transaction(fn ->
-      reset_password
-      |> PasswordReset.changeset(%{reset_token_used: true})
-      |> Repo.update()
+    statements =
+      Multi.new()
+      |> Multi.update(
+        :password_reset,
+        PasswordReset.changeset(reset_password, %{reset_token_used: true})
+      )
+      |> Multi.update(:user, User.changeset(reset_password.user, %{password: new_password}))
 
-      reset_password.user
-      |> update_user(%{password: new_password})
-    end)
+    case Repo.transaction(statements) do
+      {:ok, %{user: user, password_reset: _reset}} ->
+        {:ok, user}
+
+      {:error, _failed_operation, failed_value, _changes_so_far} ->
+        {:error, failed_value}
+    end
   end
 
   def reset_password(reset_token, new_password) do
