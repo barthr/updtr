@@ -63,6 +63,14 @@ defmodule UpdtrWeb.UserController do
     end
   end
 
+  def activate_user(conn, %{"token" => token}) do
+    with {:ok, user} <- Accounts.validate_email(token) do
+      conn
+      |> put_status(:ok)
+      |> render("show.json", user: user)
+    end
+  end
+
   defp authenticate_valid_action(conn, _) do
     current_user = Guardian.Plug.current_resource(conn)
 

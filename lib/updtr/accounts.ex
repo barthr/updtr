@@ -37,14 +37,20 @@ defmodule Updtr.Accounts do
   end
 
   def sign_up(email, password) do
+    activation_token = random_string(32)
+
     user_changeset =
       %User{}
-      |> User.changeset(%{email: email, password: password, email_validated: false})
+      |> User.changeset(%{
+        email: email,
+        password: password,
+        activation_token: activation_token
+      })
 
     Multi.new()
     |> Multi.insert(:user, user_changeset)
     |> Multi.run(:verification_mail, fn _repo, %{user: user} ->
-      with _value <- Updtr.Mailer.registration_mail(user.email, user.id) do
+      with _value <- Updtr.Mailer.registration_mail(user.email, activation_token) do
         {:ok, "Check your email"}
       end
     end)
@@ -56,6 +62,25 @@ defmodule Updtr.Accounts do
       {:error, _failed_operation, failed_value, _changes_so_far} ->
         {:error, failed_value}
     end
+  end
+
+  def validate_email(token) do
+    query =
+      from u in User,
+        where: u.activation_token == ^token
+
+    Repo.one(query)
+    |> set_email_validated()
+  end
+
+  defp set_email_validated(nil) do
+    {:error, :invalid_token}
+  end
+
+  defp set_email_validated(user) do
+    user
+    |> User.activation_changeset(%{email_validated: true, activation_token: nil})
+    |> Repo.update()
   end
 
   def authenticate_user(email, password) do
@@ -82,7 +107,7 @@ defmodule Updtr.Accounts do
   end
 
   def request_password_reset(email) do
-    reset_token = random_string(24)
+    reset_token = random_string(32)
 
     case Repo.one(from u in User, where: u.email == ^email) do
       nil ->

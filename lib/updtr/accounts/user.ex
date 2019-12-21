@@ -7,9 +7,9 @@ defmodule Updtr.Accounts.User do
   schema "users" do
     field :email, :string
     field :email_validated, :boolean, default: false
-    field :is_active, :boolean, default: false
     field :password, :string, virtual: true
     field :password_hash, :string
+    field :activation_token, :string
 
     # Add support for microseconds at the language level
     # for this specific schema
@@ -19,12 +19,18 @@ defmodule Updtr.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :is_active, :password])
-    |> validate_required([:email, :is_active, :password])
+    |> cast(attrs, [:email, :password, :activation_token, :email_validated])
+    |> validate_required([:email, :password])
     |> validate_length(:password, min: 10, max: 64)
     |> validate_format(:email, ~r/@/)
     |> unique_constraint(:email)
     |> put_password_hash()
+  end
+
+  def activation_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:id, :email, :email_validated, :activation_token])
+    |> unique_constraint(:email)
   end
 
   defp put_password_hash(

@@ -10,7 +10,7 @@ defmodule Updtr.Mailer do
       from: "no-reply@updtr.io",
       subject: "Welcome to Updtr, validate your email",
       text_body:
-        "Thanks for joining Updtr click the following link to activate your account: #{@url}/activate/#{
+        "Thanks for joining Updtr click the following link to activate your account: #{@url}/activate?token=#{
           token
         }"
     )

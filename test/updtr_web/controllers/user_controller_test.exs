@@ -9,18 +9,15 @@ defmodule UpdtrWeb.UserControllerTest do
 
   @create_attrs %{
     email: "some email",
-    is_active: true,
     password: "some password"
   }
   @update_attrs %{
     email: "some updated email",
-    is_active: false,
     password: "some updated password"
   }
-  @invalid_attrs %{email: nil, is_active: nil, password: nil}
+  @invalid_attrs %{email: nil, password: nil}
   @current_user_attrs %{
     email: "some current user email",
-    is_active: true,
     password: "some current user password"
   }
 
@@ -46,8 +43,7 @@ defmodule UpdtrWeb.UserControllerTest do
       assert json_response(conn, 200)["data"] == [
                %{
                  "id" => current_user.id,
-                 "email" => current_user.email,
-                 "is_active" => current_user.is_active
+                 "email" => current_user.email
                }
              ]
     end
@@ -62,8 +58,7 @@ defmodule UpdtrWeb.UserControllerTest do
 
       assert %{
                "id" => id,
-               "email" => "some email",
-               "is_active" => true
+               "email" => "some email"
              } = json_response(conn, 200)["data"]
     end
 
@@ -84,8 +79,7 @@ defmodule UpdtrWeb.UserControllerTest do
 
       assert %{
                "id" => id,
-               "email" => "some updated email",
-               "is_active" => false
+               "email" => "some updated email"
              } = json_response(conn, 200)["data"]
     end
 
