@@ -14,7 +14,7 @@ defmodule Updtr.Mailer do
           token
         }"
     )
-    |> deliver_now()
+    |> deliver_later()
   end
 
   def reset_password(to, token) do
@@ -23,11 +23,15 @@ defmodule Updtr.Mailer do
       from: "no-reply@updtr.io",
       subject: "Reset password"
     )
-    |> html_body("<h3>Dear #{to}</h3>
-      <p>You've requested a password reset, if you haven't please ignore this email.<br><br>
-      Click the following link to reset your password: <a>#{@url}/reset-password?token=#{token}</a><br><br>
-      Kind Regards, <br><br>Updtr Team</p>
-      ")
-    |> deliver_now()
+    |> text_body("Dear #{to}
+
+    You've requested a password reset, if you haven't please ignore this email.
+
+    Click the following link to reset your password: #{@url}/reset-password?token=#{token}
+
+    Kind Regards,
+
+    Updtr Team")
+    |> deliver_later()
   end
 end

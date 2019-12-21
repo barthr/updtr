@@ -16,6 +16,8 @@ config :updtr, UpdtrWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :updtr, Updtr.Mailer, base_url: "http://updtr.io"
+
 config :updtr, Updtr.Mailer, adapter: Bamboo.SendGridAdapter
 
 # ## SSL Support
