@@ -11,6 +11,8 @@ database_url =
     For example: ecto://USER:PASS@HOST/DATABASE
     """
 
+config :updtr, Updtr.Mailer, api_key: System.get_env("SENDGRID_API_KEY")
+
 config :updtr, Updtr.Repo,
   # ssl: true,
   url: database_url,

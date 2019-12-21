@@ -17,4 +17,6 @@ config :updtr, UpdtrWeb.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
+config :updtr, Updtr.Mailer, adapter: Bamboo.TestAdapter
+
 config :bcrypt_elixir, :log_rounds, 4
