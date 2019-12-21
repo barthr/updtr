@@ -48,10 +48,10 @@ defmodule UpdtrWeb.UserController do
   end
 
   def sign_in(conn, %{"email" => email, "password" => password}) do
-    with {:ok, token} <- Auth.Guardian.authenticate(email, password) do
+    with {:ok, token, user} <- Auth.Guardian.authenticate(email, password) do
       conn
       |> put_status(:created)
-      |> render("sign_in.json", %{token: token})
+      |> render("sign_in.json", %{token: token, user: user})
     end
   end
 

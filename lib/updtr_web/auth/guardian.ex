@@ -23,6 +23,6 @@ defmodule UpdtrWeb.Auth.Guardian do
 
   defp create_token(user) do
     {:ok, token, _claims} = encode_and_sign(user)
-    {:ok, token}
+    {:ok, token, user}
   end
 end

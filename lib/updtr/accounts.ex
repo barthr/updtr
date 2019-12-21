@@ -135,23 +135,25 @@ defmodule Updtr.Accounts do
         {:error, "request email #{email} not found"}
 
       user ->
-        %PasswordReset{}
-        |> PasswordReset.changeset(%{user_id: user.id, password_reset_token: reset_token})
-        |> Repo.insert()
-        |> send_password_reset_mail
+        Multi.new()
+        |> Multi.insert(
+          :password_reset,
+          PasswordReset.changeset(%PasswordReset{}, %{
+            user_id: user.id,
+            password_reset_token: reset_token
+          })
+        )
+        |> Multi.run(:send_password_reset_mail, fn _repo, %{password_reset: password_reset} ->
+          user = get_user!(password_reset.user_id)
+
+          reset_token = password_reset.password_reset_token
+
+          with Updtr.Mailer.reset_password(user.email, reset_token) do
+            {:ok, "check your email"}
+          end
+        end)
+        |> Repo.transaction()
     end
-  end
-
-  defp send_password_reset_mail({:ok, %PasswordReset{user_id: id, password_reset_token: token}}) do
-    user = get_user!(id)
-
-    with Updtr.Mailer.reset_password(user.email, token) do
-      {:ok, :email_send}
-    end
-  end
-
-  defp send_password_reset_mail({:error, _message}) do
-    {:ok, :email_send}
   end
 
   defp update_user_password(nil, _new_password) do
