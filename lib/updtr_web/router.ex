@@ -20,6 +20,7 @@ defmodule UpdtrWeb.Router do
     post "/users/login", UserController, :sign_in
     post "/users/signup", UserController, :sign_up
     get "/users/verify-email", UserController, :activate_user
+    put "/users/resend-verification-email", UserController, :resend_verification
 
     post "/users/request-password-reset", PasswordResetController, :request_reset_password
     post "/users/reset-password", PasswordResetController, :reset_password
