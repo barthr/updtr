@@ -21,15 +21,20 @@ defmodule UpdtrWeb.PasswordResetController do
   end
 
   def reset_password(conn, %{"token" => token, "new_password" => new_password}) do
-    with {:ok, user} = Accounts.reset_password(token, new_password) do
-      conn
-      |> put_view(UpdtrWeb.UserView)
-      |> render("show.json", user: user)
+    case Accounts.reset_password(token, new_password) do
+      {:ok, user} ->
+        conn
+        |> put_status(:ok)
+        |> put_view(UpdtrWeb.UserView)
+        |> render("show.json", user: user)
 
-      # {:error, message} ->
-      #   conn
-      #   |> put_status(:bad_request)
-      #   |> render("token_error.json", message: message)
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:error, changeset}
+
+      {:error, message} ->
+        conn
+        |> put_status(:bad_request)
+        |> render("token_error.json", message: message)
     end
   end
 end
