@@ -8,8 +8,6 @@ defmodule UpdtrWeb.UserController do
 
   require Logger
 
-  action_fallback UpdtrWeb.FallbackController
-
   plug :authenticate_valid_action when action in [:show, :update, :delete]
 
   def index(conn, _params) do
@@ -21,7 +19,6 @@ defmodule UpdtrWeb.UserController do
     with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.user_path(conn, :show, user))
       |> render("show.json", user: user)
     end
   end
@@ -78,7 +75,6 @@ defmodule UpdtrWeb.UserController do
       conn
     else
       conn
-      |> UpdtrWeb.FallbackController.call({:error, :unauthorized})
     end
   end
 end

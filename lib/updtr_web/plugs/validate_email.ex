@@ -13,7 +13,8 @@ defmodule UpdtrWeb.ValidateEmailPlug do
     else
       conn
       |> halt()
-      |> UpdtrWeb.FallbackController.call({:error, "Please validate your email address"})
+
+      # TODO: fix this plug
     end
   end
 end

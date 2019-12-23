@@ -28,3 +28,5 @@ updtr-*.tar
 /priv/static/
 
 /.elixir_ls/
+
+/assets/node_modules/

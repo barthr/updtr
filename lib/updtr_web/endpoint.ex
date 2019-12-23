@@ -18,6 +18,8 @@ defmodule UpdtrWeb.Endpoint do
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
   if code_reloading? do
+    socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
+    plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
   end
 
@@ -39,12 +41,6 @@ defmodule UpdtrWeb.Endpoint do
     store: :cookie,
     key: "_updtr_key",
     signing_salt: "fzXy2twF"
-
-  plug Corsica,
-    origins: "http://localhost:8080",
-    allow_credentials: true,
-    allow_headers: ["Content-Type"],
-    log: [rejected: :error, invalid: :warn, accepted: :debug]
 
   plug UpdtrWeb.Router
 end
