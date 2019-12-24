@@ -24,6 +24,8 @@ defmodule UpdtrWeb.Router do
 
     get "/", PageController, :index
 
+    resources "/auth", AuthController, only: [:new, :create], singleton: true
+
     # post "/users/login", UserController, :sign_in
     # post "/users/signup", UserController, :sign_up
     # get "/users/verify-email", UserController, :activate_user

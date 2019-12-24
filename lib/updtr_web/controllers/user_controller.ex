@@ -15,14 +15,6 @@ defmodule UpdtrWeb.UserController do
     render(conn, "index.json", users: users)
   end
 
-  def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
-      conn
-      |> put_status(:created)
-      |> render("show.json", user: user)
-    end
-  end
-
   def show(conn, %{"id" => id}) do
     user = Accounts.get_user!(id)
     render(conn, "show.json", user: user)
@@ -36,23 +28,14 @@ defmodule UpdtrWeb.UserController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
-
-    with {:ok, %User{}} <- Accounts.delete_user(user) do
-      send_resp(conn, :no_content, "")
-    end
+  def delete(conn, _) do
+    conn
+    |> put_flash(:info, "Succesfully logged out")
+    |> clear_session()
+    |> redirect(to: "/")
   end
 
-  def sign_in(conn, %{"email" => email, "password" => password}) do
-    with {:ok, token, user} <- Auth.Guardian.authenticate(email, password) do
-      conn
-      |> put_status(:created)
-      |> render("sign_in.json", %{token: token, user: user})
-    end
-  end
-
-  def sign_up(conn, %{"email" => email, "password" => password}) do
+  def create(conn, %{"email" => email, "password" => password}) do
     with {:ok, _message} <- Accounts.sign_up(email, password) do
       conn
       |> put_status(:created)

@@ -17,7 +17,7 @@ defmodule Updtr.Accounts.User do
   end
 
   @doc false
-  def changeset(user, attrs) do
+  def changeset(user, attrs \\ %{}) do
     user
     |> cast(attrs, [:email, :password, :activation_token, :email_validated])
     |> validate_required([:email, :password])
