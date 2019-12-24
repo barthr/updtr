@@ -53,8 +53,8 @@ module.exports = (env, options) => ({
     new MiniCssExtractPlugin({ filename: '../css/app.css' }),
     new CopyWebpackPlugin([{ from: 'static/', to: '../' }]),
     new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery",
+      $: "admin-lte/plugins/jquery/jquery.min.js",
+      jQuery: "admin-lte/plugins/jquery/jquery.min.js",
     })
   ]
 });

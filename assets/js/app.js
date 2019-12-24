@@ -11,5 +11,9 @@ import css from "../css/app.scss"
 //
 import "phoenix_html";
 
+import "admin-lte/plugins/bootstrap/js/bootstrap"
+
 
 import "admin-lte";
+import "admin-lte/build/js/PushMenu";
+import "admin-lte/build/js/CardWidget";

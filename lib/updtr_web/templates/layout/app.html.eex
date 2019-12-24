@@ -27,7 +27,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <%= render "_navigation.html", assigns %>
 
     <div class="content-wrapper">
-      <%= render "_flash.html", assigns %>
       <%= render "_main-content.html", assigns %>
     </div>
     <%= render "_footer.html", assigns %>

@@ -4,7 +4,7 @@
       <span class="brand-text font-weight-bold">Updtr.io</span>
     </a>
 
-    <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+    <button class="navbar-toggler order-1" type="button" data-widget="pushmenu" data-toggle="collapse" data-target="#navbarCollapse"
       aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -24,7 +24,7 @@
     <!-- Right navbar links -->
     <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
       <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"><i class="fas fa-th-large"></i></a>
+        <a class="nav-link" data-widget="pushmenu" data-slide="true" href="#"><i class="fas fa-th-large"></i></a>
       </li>
     </ul>
   </div>
