@@ -16,7 +16,7 @@ defmodule Updtr.Accounts.PasswordReset do
   end
 
   @doc false
-  def changeset(verification, attrs) do
+  def changeset(verification, attrs \\ %{}) do
     verification
     |> cast(attrs, [:password_reset_token, :user_id, :reset_token_used])
     |> foreign_key_constraint(:user_id)
@@ -26,6 +26,7 @@ defmodule Updtr.Accounts.PasswordReset do
 
   def used_changeset(verification, attrs) do
     verification
-    |> cast(attrs, [:reset_token_used])
+    |> cast(attrs, [:reset_token_used, :user_id])
+    |> validate_required([:reset_token_used, :user_id])
   end
 end

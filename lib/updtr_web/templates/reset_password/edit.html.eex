@@ -6,9 +6,21 @@
       </div>
       <div class="card-body login-card-body">
         <p class="login-box-msg">Please pick a new <strong>strong</strong> password</p>
-        <%= form_for @conn, Routes.reset_password_path(@conn, :reset_password), [method: :put, as: :password_reset], fn f -> %>
+        <%= form_for @changeset, Routes.reset_password_path(@conn, :update), [class: "needs-validation"], fn f -> %>
         <div class="input-group mb-3">
-          <%= password_input f, :password, placeholder: "Password", class: "form-control", required: true, minlength: 10, maxlength: 32 %>
+          <%= inputs_for f, :user, fn u -> %>
+            <%= password_input u, :password, placeholder: "Password", class: error_class(u, :password), required: true %>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+              </div>
+            </div>
+            <%= error_tag u, :password %>
+          <% end %>
+        </div>
+
+        <div class="input-group mb-3">
+          <%= password_input f, :password_confirm, placeholder: "Confirm password", class: "form-control", required: true %>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -16,16 +28,7 @@
           </div>
         </div>
 
-        <div class="input-group mb-3">
-          <%= password_input f, :password_confirm, placeholder: "Confirm password", class: "form-control", required: true, minlength: 10, maxlength: 32 %>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
-            </div>
-          </div>
-        </div>
-
-        <%= hidden_input f, :token, value: @password_reset.password_reset_token%>
+        <%= hidden_input f, :password_reset_token, value: @password_reset.password_reset_token %>
 
 
 

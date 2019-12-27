@@ -33,10 +33,8 @@ defmodule UpdtrWeb.Router do
 
     get "/forgot-password", ResetPasswordController, :new
 
-    put "/reset-password", ResetPasswordController, :reset_password
-
     resources "/reset-password", ResetPasswordController,
-      only: [:create, :show],
+      only: [:create, :show, :edit, :update],
       singleton: true
 
     post "/users", UserController, :create

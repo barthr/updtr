@@ -36,12 +36,16 @@ defmodule Updtr.Accounts do
     User.changeset(user, %{})
   end
 
+  def get_password_reset_by_token(reset_token) when is_nil(reset_token) do
+    nil
+  end
+
   def get_password_reset_by_token(reset_token) do
     query =
       from p in PasswordReset,
         where: p.password_reset_token == ^reset_token,
         where: p.valid_until > ^DateTime.utc_now(),
-        where: not p.reset_token_used,
+        where: p.reset_token_used == false,
         preload: [:user],
         select: p
 
@@ -147,34 +151,14 @@ defmodule Updtr.Accounts do
     end
   end
 
-  defp update_user_password(nil, _new_password) do
-    {:error, "Invalid reset token"}
+  def reset_password(password_reset, _params) when is_nil(password_reset) do
+    {:error, "Reset token not found"}
   end
 
-  defp update_user_password(%PasswordReset{reset_token_used: true}, _new_password) do
-    {:error, "Reset token is already used"}
-  end
-
-  defp update_user_password(%PasswordReset{} = reset_password, new_password) do
-    statements =
-      Multi.new()
-      |> Multi.update(
-        :password_reset,
-        PasswordReset.changeset(reset_password, %{reset_token_used: true})
-      )
-      |> Multi.update(:user, User.changeset(reset_password.user, %{password: new_password}))
-
-    case Repo.transaction(statements) do
-      {:ok, %{user: user, password_reset: _reset}} ->
-        {:ok, user}
-
-      {:error, _failed_operation, failed_value, _changes_so_far} ->
-        {:error, failed_value}
-    end
-  end
-
-  def reset_password(reset_token, new_password) do
-    get_password_reset_by_token(reset_token)
-    |> update_user_password(new_password)
+  def reset_password(password_reset, params) do
+    password_reset
+    |> PasswordReset.changeset(params)
+    |> Ecto.Changeset.cast_assoc(:user, with: &User.changeset/2)
+    |> Repo.update()
   end
 end

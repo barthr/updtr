@@ -2,14 +2,18 @@ defmodule UpdtrWeb.ResetPasswordController do
   use UpdtrWeb, :controller
 
   alias Updtr.Accounts
-  alias UpdtrWeb.Auth
+  alias Updtr.Accounts.PasswordReset
 
   def new(conn, _) do
     conn
     |> render("new.html")
   end
 
-  def show(conn, %{"token" => token}) do
+  def show(conn, params) do
+    edit(conn, params)
+  end
+
+  def edit(conn, %{"token" => token}) do
     case Accounts.get_password_reset_by_token(token) do
       nil ->
         conn
@@ -18,7 +22,10 @@ defmodule UpdtrWeb.ResetPasswordController do
 
       password_reset ->
         conn
-        |> render("show.html", password_reset: password_reset)
+        |> render("edit.html",
+          password_reset: password_reset,
+          changeset: PasswordReset.changeset(password_reset)
+        )
     end
   end
 
@@ -30,29 +37,41 @@ defmodule UpdtrWeb.ResetPasswordController do
     |> redirect(to: Routes.auth_path(conn, :new))
   end
 
-  def reset_password(conn, %{
+  def update(conn, %{
         "password_reset" => %{
-          "token" => token,
+          "password_reset_token" => token,
           "password" => password,
           "password_confirm" => password_confirm
         }
-      }) do
-    if password != password_confirm do
-      conn
-      |> put_flash(:error, "Passwords aren't the same")
-      |> redirect(to: Routes.reset_password_path(conn, :show, token: token))
-    else
-      case Accounts.reset_password(token, password) do
-        {:error, message} ->
-          conn
-          |> put_flash(:error, message)
-          |> redirect(to: Routes.reset_password_path(conn, :show, token: token))
+      })
+      when password != password_confirm do
+    conn
+    |> put_flash(:error, "Passwords aren't the same")
+    |> redirect(to: Routes.reset_password_path(conn, :edit, token: token))
+  end
 
-        {:ok, _message} ->
-          conn
-          |> put_flash(:info, "Updated password")
-          |> redirect(to: Routes.auth_path(conn, :new))
-      end
+  def update(conn, %{
+        "password_reset" => password_reset_params
+      }) do
+    password_reset =
+      Accounts.get_password_reset_by_token(password_reset_params["password_reset_token"])
+
+    case Accounts.reset_password(
+           password_reset,
+           password_reset_params
+         ) do
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, "edit.html", changeset: changeset, password_reset: password_reset)
+
+      {:error, message} ->
+        conn
+        |> put_flash(:error, message)
+        |> redirect(to: Routes.auth_path(conn, :new))
+
+      {:ok, _message} ->
+        conn
+        |> put_flash(:info, "Updated password")
+        |> redirect(to: Routes.auth_path(conn, :new))
     end
   end
 end
