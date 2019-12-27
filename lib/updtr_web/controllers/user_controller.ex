@@ -1,10 +1,7 @@
 defmodule UpdtrWeb.UserController do
   use UpdtrWeb, :controller
 
-  alias Updtr.Auth
-  alias UpdtrWeb.Auth
   alias Updtr.Accounts
-  alias Updtr.Accounts.User
 
   require Logger
 
@@ -13,6 +10,10 @@ defmodule UpdtrWeb.UserController do
   def show(conn, %{"id" => id}) do
     user = Accounts.get_user!(id)
     render(conn, "show.json", user: user)
+  end
+
+  def new(conn, _) do
+    render(conn, "new.html")
   end
 
   def create(conn, %{"email" => email, "password" => password}) do

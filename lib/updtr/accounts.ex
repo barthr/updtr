@@ -36,6 +36,18 @@ defmodule Updtr.Accounts do
     User.changeset(user, %{})
   end
 
+  def get_password_reset_by_token(reset_token) do
+    query =
+      from p in PasswordReset,
+        where: p.password_reset_token == ^reset_token,
+        where: p.valid_until > ^DateTime.utc_now(),
+        where: not p.reset_token_used,
+        preload: [:user],
+        select: p
+
+    Repo.one(query)
+  end
+
   def sign_up(email, password) do
     activation_token = random_string(32)
 
@@ -136,11 +148,11 @@ defmodule Updtr.Accounts do
   end
 
   defp update_user_password(nil, _new_password) do
-    {:error, "invalid reset token"}
+    {:error, "Invalid reset token"}
   end
 
   defp update_user_password(%PasswordReset{reset_token_used: true}, _new_password) do
-    {:error, "reset token is already used"}
+    {:error, "Reset token is already used"}
   end
 
   defp update_user_password(%PasswordReset{} = reset_password, new_password) do
@@ -162,14 +174,7 @@ defmodule Updtr.Accounts do
   end
 
   def reset_password(reset_token, new_password) do
-    query =
-      from p in PasswordReset,
-        where: p.password_reset_token == ^reset_token,
-        where: p.valid_until > ^DateTime.utc_now(),
-        preload: [:user],
-        select: p
-
-    Repo.one(query)
+    get_password_reset_by_token(reset_token)
     |> update_user_password(new_password)
   end
 end

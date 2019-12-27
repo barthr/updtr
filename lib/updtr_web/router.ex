@@ -27,8 +27,19 @@ defmodule UpdtrWeb.Router do
 
     get "/", PageController, :index
 
-    resources "/auth", AuthController, only: [:new, :create, :delete], singleton: true
-    get "/reset-password", ResetPasswordController, :new
+    resources "/auth", AuthController, only: [:create, :delete], singleton: true
+    get "/login", AuthController, :new
+    get "/sign-up", UserController, :new
+
+    get "/forgot-password", ResetPasswordController, :new
+
+    put "/reset-password", ResetPasswordController, :reset_password
+
+    resources "/reset-password", ResetPasswordController,
+      only: [:create, :show],
+      singleton: true
+
+    post "/users", UserController, :create
 
     # post "/users/login", UserController, :sign_in
     # post "/users/signup", UserController, :sign_up

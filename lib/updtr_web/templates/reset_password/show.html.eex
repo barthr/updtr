@@ -1,0 +1,45 @@
+<div class="row justify-content-center mt-5">
+  <div class="col-md-4 mt-5">
+    <div class="card">
+      <div class="card-header">
+        New password 
+      </div>
+      <div class="card-body login-card-body">
+        <p class="login-box-msg">Please pick a new <strong>strong</strong> password</p>
+        <%= form_for @conn, Routes.reset_password_path(@conn, :reset_password), [method: :put, as: :password_reset], fn f -> %>
+        <div class="input-group mb-3">
+          <%= password_input f, :password, placeholder: "Password", class: "form-control", required: true, minlength: 10, maxlength: 32 %>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group mb-3">
+          <%= password_input f, :password_confirm, placeholder: "Confirm password", class: "form-control", required: true, minlength: 10, maxlength: 32 %>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+
+        <%= hidden_input f, :token, value: @password_reset.password_reset_token%>
+
+
+
+        <div class="row">
+          <div class="col-12">
+            <%= submit "Change password", class: "btn btn-primary btn-block" %>
+          </div>
+
+        </div>
+        <% end %>
+        <p class="mt-3 mb-1">
+          <%= link "Login", to: Routes.auth_path(@conn, :new) %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -31,13 +31,6 @@ defmodule UpdtrWeb.AuthController do
     |> redirect(to: Routes.auth_path(conn, :new))
   end
 
-  def request_reset_password(conn, %{"email" => email}) do
-    # Accounts.request_password_reset(email)
-
-    conn
-    |> send_resp(204, "")
-  end
-
   # def reset_password(conn, %{"token" => token, "new_password" => new_password}) do
   #   # with {:ok, user} <- Accounts.reset_password(token, new_password) do
   #   #   conn

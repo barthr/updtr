@@ -6,7 +6,7 @@
       </div>
       <div class="card-body login-card-body">
         <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
-        <%= form_for @conn, Routes.auth_path(@conn, :create), [method: :post, as: :user], fn f -> %>
+        <%= form_for @conn, Routes.reset_password_path(@conn, :create), [method: :post, as: :reset_password], fn f -> %>
         <div class="input-group mb-3">
           <%= email_input f, :email, placeholder: "Email", class: "form-control", required: true %>
           <div class="input-group-append">
