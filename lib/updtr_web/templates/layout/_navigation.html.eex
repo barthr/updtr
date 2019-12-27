@@ -1,14 +1,13 @@
 <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
   <div class="container">
-    <a href="#" class="navbar-brand">
-      <span class="brand-text font-weight-bold">Updtr.io</span>
-    </a>
-
-    <button class="navbar-toggler order-1" type="button" data-widget="pushmenu" data-toggle="collapse" data-target="#navbarCollapse"
+    <button class="navbar-toggler order-0 mr-2" type="button" data-widget="pushmenu" data-toggle="collapse" data-target="#navbarCollapse"
       aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
+    <a href="#" class="navbar-brand order-1">
+      <span class="brand-text font-weight-bold">Updtr.io</span>
+    </a>
     <div class="collapse navbar-collapse order-3" id="navbarCollapse">
       <!-- Left navbar links -->
       <ul class="navbar-nav">
@@ -24,7 +23,11 @@
     <!-- Right navbar links -->
     <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" data-slide="true" href="#"><i class="fas fa-th-large"></i></a>
+        <%= if authenticated?(@conn) do %>
+          <%= link raw(~s'<i class="fa fa-sign-out-alt"></i> Log out'), to: Routes.auth_path(@conn, :delete), method: :delete, class: "nav-link" %>
+        <% else %>
+          <%= link raw(~s'<i class="fas fa-sign-in-alt"></i>'), to: Routes.auth_path(@conn, :new), class: "nav-link" %>
+        <% end %>
       </li>
     </ul>
   </div>

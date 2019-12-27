@@ -4,7 +4,7 @@
       <div class="card-header">
         Sign in
       </div>
-      <div class="card-body">
+      <div class="card-body login-card-body">
         <%= form_for @conn, Routes.auth_path(@conn, :create), [method: :post, as: :user], fn f -> %>
         <div class="input-group mb-3">
           <%= email_input f, :email, placeholder: "Email", class: "form-control", required: true %>
@@ -31,12 +31,17 @@
                 Remember Me
               </label>
             </div>
-        </div>
+          </div>
 
-        <div class="col-4">
-          <%= submit "Sign in", class: "btn btn-primary btn-block" %>
+          <div class="col-4">
+            <%= submit "Sign in", class: "btn btn-primary btn-block" %>
+          </div>
+
         </div>
         <% end %>
+        <p class="mb-1">
+          <%= link "I forgot my password", to: Routes.reset_password_path(@conn, :new) %>
+        </p>
       </div>
     </div>
   </div>

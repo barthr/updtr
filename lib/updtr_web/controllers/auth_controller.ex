@@ -12,8 +12,8 @@ defmodule UpdtrWeb.AuthController do
     case Accounts.authenticate_user(email, password) do
       {:ok, user} ->
         conn
-        |> put_flash(:info, "Welcome back #{user.email}")
         |> Auth.Guardian.Plug.sign_in(user)
+        |> put_flash(:info, "Welcome back #{user.email}")
         |> redirect(to: "/")
 
       {:error, _} ->
@@ -23,12 +23,20 @@ defmodule UpdtrWeb.AuthController do
     end
   end
 
-  # def request_reset_password(conn, %{"email" => email}) do
-  #   # Accounts.request_password_reset(email)
+  def delete(conn, _) do
+    conn
+    |> put_flash(:info, "Succesfully logged out")
+    |> Auth.Guardian.Plug.sign_out()
+    |> clear_session()
+    |> redirect(to: Routes.auth_path(conn, :new))
+  end
 
-  #   conn
-  #   |> send_resp(204, "")
-  # end
+  def request_reset_password(conn, %{"email" => email}) do
+    # Accounts.request_password_reset(email)
+
+    conn
+    |> send_resp(204, "")
+  end
 
   # def reset_password(conn, %{"token" => token, "new_password" => new_password}) do
   #   # with {:ok, user} <- Accounts.reset_password(token, new_password) do

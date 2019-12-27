@@ -10,29 +10,9 @@ defmodule UpdtrWeb.UserController do
 
   plug :authenticate_valid_action when action in [:show, :update, :delete]
 
-  def index(conn, _params) do
-    users = Accounts.list_users()
-    render(conn, "index.json", users: users)
-  end
-
   def show(conn, %{"id" => id}) do
     user = Accounts.get_user!(id)
     render(conn, "show.json", user: user)
-  end
-
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Accounts.get_user!(id)
-
-    with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
-      render(conn, "show.json", user: user)
-    end
-  end
-
-  def delete(conn, _) do
-    conn
-    |> put_flash(:info, "Succesfully logged out")
-    |> clear_session()
-    |> redirect(to: "/")
   end
 
   def create(conn, %{"email" => email, "password" => password}) do
@@ -42,6 +22,14 @@ defmodule UpdtrWeb.UserController do
       |> render("sign_up.json", message: "Succesfully signed up, see your email for instructions")
     end
   end
+
+  # def update(conn, %{"id" => id, "user" => user_params}) do
+  #   user = Accounts.get_user!(id)
+
+  #   with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
+  #     render(conn, "show.json", user: user)
+  #   end
+  # end
 
   def activate_user(conn, %{"token" => token}) do
     with {:ok, user} <- Accounts.validate_email(token) do
