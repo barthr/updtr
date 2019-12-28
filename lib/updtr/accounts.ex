@@ -56,8 +56,7 @@ defmodule Updtr.Accounts do
     activation_token = random_string(32)
 
     user_changeset =
-      %User{}
-      |> User.changeset(%{
+      User.changeset(%User{}, %{
         email: email,
         password: password,
         activation_token: activation_token
