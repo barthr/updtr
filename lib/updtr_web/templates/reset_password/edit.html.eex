@@ -20,12 +20,13 @@
         </div>
 
         <div class="input-group mb-3">
-          <%= password_input f, :password_confirm, placeholder: "Confirm password", class: "form-control", required: true, minlength: 10, maxlength: 32 %>
+          <%= password_input f, :password_confirm, placeholder: "Confirm password", class: error_class(f, :password_confirm), required: true, minlength: 10, maxlength: 32 %>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
             </div>
           </div>
+          <%= error_tag f, :password_confirm %>
         </div>
 
         <%= hidden_input f, :password_reset_token, value: @password_reset.password_reset_token %>

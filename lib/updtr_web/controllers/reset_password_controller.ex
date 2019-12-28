@@ -47,8 +47,19 @@ defmodule UpdtrWeb.ResetPasswordController do
         }
       })
       when password != password_confirm do
-    conn
-    |> redirect(to: Routes.reset_password_path(conn, :edit, token: token))
+    password_reset = Accounts.get_password_reset_by_token(token)
+
+    changeset =
+      password_reset
+      |> Accounts.PasswordReset.changeset()
+      |> Ecto.Changeset.add_error(:password_confirm, "passwords must match")
+
+    render(conn, "edit.html",
+      changeset: %{changeset | action: :update},
+      password_reset: password_reset
+    )
+
+    # |> redirect(to: Routes.reset_password_path(conn, :edit, token: token))
   end
 
   def update(conn, %{
