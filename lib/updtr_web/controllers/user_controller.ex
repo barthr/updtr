@@ -39,11 +39,17 @@ defmodule UpdtrWeb.UserController do
   end
 
   def activate_user(conn, %{"token" => token}) do
-    with {:ok, user} <- Accounts.validate_email(token) do
-      conn
-      |> Auth.Guardian.Plug.sign_in(user)
-      |> put_flash(:info, "Succesfully activated your account #{user.email}")
-      |> redirect(to: "/")
+    case Accounts.validate_email(token) do
+      {:ok, user} ->
+        conn
+        |> Auth.Guardian.Plug.sign_in(user)
+        |> put_flash(:info, "Succesfully activated your account #{user.email}")
+        |> redirect(to: "/")
+
+      {:error, _message} ->
+        conn
+        |> put_flash(:error, "Invalid activation token")
+        |> redirect(to: Routes.auth_path(conn, :new))
     end
   end
 end
