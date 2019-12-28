@@ -12,10 +12,10 @@
       <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a href="#" class="nav-link">Home</a>
+          <%= link raw(~s'<i class="fas fa-home"></i> Home'), to: Routes.page_path(@conn, :index), class: "nav-link" %>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">Contact</a>
+          <%= link raw(~s'<i class="fas fa-id-card"></i> Contact'), to: Routes.page_path(@conn, :index), class: "nav-link" %>
         </li>
       </ul>
     </div>

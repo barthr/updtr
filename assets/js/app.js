@@ -17,3 +17,9 @@ import "admin-lte/plugins/bootstrap/js/bootstrap"
 import "admin-lte";
 import "admin-lte/build/js/PushMenu";
 import "admin-lte/build/js/CardWidget";
+
+window.setTimeout(function () {
+  $(".alert").fadeTo(200, 0).slideUp(200, function () {
+    $(this).remove();
+  });
+}, 1000);
