@@ -38,39 +38,38 @@ defmodule UpdtrWeb.ResetPasswordController do
   end
 
   def update(conn, %{
-        "password_reset" => %{
-          "password_reset_token" => token,
-          "password" => password,
-          "password_confirm" => password_confirm
-        }
-      })
-      when password != password_confirm do
-    conn
-    |> redirect(to: Routes.reset_password_path(conn, :edit, token: token))
-  end
-
-  def update(conn, %{
         "password_reset" => password_reset_params
       }) do
-    password_reset =
-      Accounts.get_password_reset_by_token(password_reset_params["password_reset_token"])
+    if password_reset_params["password"] != password_reset_params["password_confirm"] do
+      conn
+      |> put_flash(:error, "Passwords should match!")
+      |> redirect(
+        to:
+          Routes.reset_password_path(conn, :edit,
+            token: password_reset_params["password_reset_token"]
+          )
+      )
+    else
+      password_reset =
+        Accounts.get_password_reset_by_token(password_reset_params["password_reset_token"])
 
-    case Accounts.reset_password(
-           password_reset,
-           Map.put(password_reset_params, "reset_token_used", true)
-         ) do
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", changeset: changeset, password_reset: password_reset)
+      case Accounts.reset_password(
+             password_reset,
+             Map.put(password_reset_params, "reset_token_used", true)
+           ) do
+        {:error, %Ecto.Changeset{} = changeset} ->
+          render(conn, "edit.html", changeset: changeset, password_reset: password_reset)
 
-      {:error, message} ->
-        conn
-        |> put_flash(:error, message)
-        |> redirect(to: Routes.auth_path(conn, :new))
+        {:error, message} ->
+          conn
+          |> put_flash(:error, message)
+          |> redirect(to: Routes.auth_path(conn, :new))
 
-      {:ok, _message} ->
-        conn
-        |> put_flash(:info, "Updated password")
-        |> redirect(to: Routes.auth_path(conn, :new))
+        {:ok, _message} ->
+          conn
+          |> put_flash(:info, "Updated password")
+          |> redirect(to: Routes.auth_path(conn, :new))
+      end
     end
   end
 end
