@@ -46,7 +46,6 @@ defmodule UpdtrWeb.ResetPasswordController do
       })
       when password != password_confirm do
     conn
-    |> put_flash(:error, "Passwords aren't the same")
     |> redirect(to: Routes.reset_password_path(conn, :edit, token: token))
   end
 
@@ -58,7 +57,7 @@ defmodule UpdtrWeb.ResetPasswordController do
 
     case Accounts.reset_password(
            password_reset,
-           password_reset_params
+           Map.put(password_reset_params, "reset_token_used", true)
          ) do
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", changeset: changeset, password_reset: password_reset)
