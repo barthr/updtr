@@ -2,10 +2,11 @@ defmodule UpdtrWeb.UserController do
   use UpdtrWeb, :controller
 
   alias Updtr.Accounts
+  alias Updtr.Accounts.User
+
+  alias UpdtrWeb.Auth
 
   require Logger
-
-  plug :authenticate_valid_action when action in [:show, :update, :delete]
 
   def show(conn, %{"id" => id}) do
     user = Accounts.get_user!(id)
@@ -13,40 +14,36 @@ defmodule UpdtrWeb.UserController do
   end
 
   def new(conn, _) do
-    render(conn, "new.html")
+    changeset = Accounts.change_user(%User{})
+    render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"email" => email, "password" => password}) do
-    with {:ok, _message} <- Accounts.sign_up(email, password) do
-      conn
-      |> put_status(:created)
-      |> render("sign_up.json", message: "Succesfully signed up, see your email for instructions")
+  def create(conn, %{"user" => %{"email" => email, "password" => password}}) do
+    case Accounts.sign_up(email, password) do
+      {:ok, _} ->
+        conn
+        |> put_flash(:info, "Succesfully signed up, see your email for instructions")
+        |> redirect(to: Routes.auth_path(conn, :new))
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, "new.html", changeset: changeset)
+
+      {:error, message} ->
+        Logger.error("failed signing up user with email #{email} because #{message}")
+
+        conn
+        |> put_status(:internal_server_error)
+        |> put_flash(:error, "Unknown error when signing up")
+        |> redirect(to: Routes.user_path(conn, :new))
     end
   end
-
-  # def update(conn, %{"id" => id, "user" => user_params}) do
-  #   user = Accounts.get_user!(id)
-
-  #   with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
-  #     render(conn, "show.json", user: user)
-  #   end
-  # end
 
   def activate_user(conn, %{"token" => token}) do
     with {:ok, user} <- Accounts.validate_email(token) do
       conn
-      |> put_status(:ok)
-      |> render("show.json", user: user)
-    end
-  end
-
-  defp authenticate_valid_action(conn, _) do
-    current_user = Guardian.Plug.current_resource(conn)
-
-    if current_user.id == conn.params["id"] do
-      conn
-    else
-      conn
+      |> Auth.Guardian.Plug.sign_in(user)
+      |> put_flash(:info, "Succesfully activated your account #{user.email}")
+      |> redirect(to: "/")
     end
   end
 end

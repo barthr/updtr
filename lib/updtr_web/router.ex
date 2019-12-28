@@ -18,19 +18,17 @@ defmodule UpdtrWeb.Router do
   end
 
   pipeline :require_auth do
-    plug UpdtrWeb.ValidateEmailPlug
     plug Guardian.Plug.EnsureAuthenticated
   end
 
   scope "/", UpdtrWeb do
     pipe_through [:browser, :auth]
 
-    get "/", PageController, :index
-
     resources "/auth", AuthController, only: [:create, :delete], singleton: true
+
     get "/login", AuthController, :new
     get "/sign-up", UserController, :new
-
+    get "/activate", UserController, :activate_user
     get "/forgot-password", ResetPasswordController, :new
 
     resources "/reset-password", ResetPasswordController,
@@ -50,6 +48,8 @@ defmodule UpdtrWeb.Router do
 
   scope "/", UpdtrWeb do
     pipe_through [:browser, :auth, :require_auth]
+
+    get "/", PageController, :index
 
     resources "/users", UserController, except: [:new, :edit], singleton: true
   end

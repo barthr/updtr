@@ -101,7 +101,7 @@ defmodule Updtr.Accounts do
 
   def authenticate_user(email, password) do
     query = from(u in User, where: u.email == ^email)
-    query |> Repo.one() |> verify_password(password)
+    query |> Repo.one() |> verify_password(password) |> verify_email()
   end
 
   defp verify_password(nil, _) do
@@ -116,6 +116,18 @@ defmodule Updtr.Accounts do
     else
       {:error, "Wrong email or password"}
     end
+  end
+
+  defp verify_email({:ok, %{email_validated: true} = user}) do
+    {:ok, user}
+  end
+
+  defp verify_email({:ok, %{email_validated: false}}) do
+    {:error, :email_not_validated}
+  end
+
+  defp verify_email({:error, message}) do
+    {:error, message}
   end
 
   defp random_string(length) do

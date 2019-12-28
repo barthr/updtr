@@ -16,6 +16,11 @@ defmodule UpdtrWeb.AuthController do
         |> put_flash(:info, "Welcome back #{user.email}")
         |> redirect(to: "/")
 
+      {:error, :email_not_validated} ->
+        conn
+        |> put_flash(:error, "Validate your email before logging in")
+        |> redirect(to: Routes.auth_path(conn, :new))
+
       {:error, _} ->
         conn
         |> put_flash(:error, "Wrong email/password combination")
@@ -30,13 +35,4 @@ defmodule UpdtrWeb.AuthController do
     |> clear_session()
     |> redirect(to: Routes.auth_path(conn, :new))
   end
-
-  # def reset_password(conn, %{"token" => token, "new_password" => new_password}) do
-  #   # with {:ok, user} <- Accounts.reset_password(token, new_password) do
-  #   #   conn
-  #   #   |> put_status(:ok)
-  #   #   |> put_view(UpdtrWeb.UserView)
-  #   #   |> render("show.json", user: user)
-  #   # end
-  # end
 end

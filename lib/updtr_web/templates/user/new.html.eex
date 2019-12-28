@@ -6,23 +6,25 @@
       </div>
       <div class="card-body login-card-body">
         <p class="login-box-msg">Welcome to Updtr.io, fill in the following details to create a new account. By registering you accept the terms of service</p>
-        <%= form_for @conn, Routes.auth_path(@conn, :create), [method: :post, as: :user], fn f -> %>
+        <%= form_for @changeset, Routes.user_path(@conn, :create), fn f -> %>
         <div class="input-group mb-3">
-          <%= email_input f, :email, placeholder: "Email", class: "form-control", required: true %>
+          <%= email_input f, :email, placeholder: "Email", class: error_class(f, :email), required: true %>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
             </div>
           </div>
+          <%= error_tag f, :email %>
         </div>
 
         <div class="input-group mb-3">
-          <%= password_input f, :password, placeholder: "Password", class: "form-control", required: true %>
+          <%= password_input f, :password, placeholder: "Password", class: error_class(f, :password), required: true, minlength: 10 %>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
             </div>
           </div>
+          <%= error_tag f, :password %>
         </div>
         <div class="row">
           <div class="col-12">
