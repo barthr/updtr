@@ -1,27 +1,23 @@
 {
-  "repository": {},
-  "license": "MIT",
+  "name": "updtr",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "scripts": {
-    "deploy": "webpack --mode production",
-    "watch": "webpack --mode development --watch"
+    "clean": "rm dist/bundle.js",
+    "deploy": "cp -R static/* ../priv/static/ && parcel build js/app.js --out-dir ../priv/static/js --public-url /js --no-cache",
+    "watch": "cp -R static/* ../priv/static/ && parcel watch js/app.js --out-dir ../priv/static/js --public-url /js"
   },
   "dependencies": {
-    "admin-lte": "^3.0.1",
+    "css": "^2.2.4",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "babel-loader": "^8.0.0",
-    "copy-webpack-plugin": "^4.5.0",
-    "css-loader": "^2.1.1",
-    "mini-css-extract-plugin": "^0.4.0",
-    "node-sass": "^4.13.0",
-    "optimize-css-assets-webpack-plugin": "^5.0.1",
-    "sass-loader": "^8.0.0",
-    "terser-webpack-plugin": "^1.1.0",
-    "webpack": "^4.41.4",
-    "webpack-cli": "^3.3.2"
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-stdin": "^0.1.1",
+    "sass": "^1.25.0"
   }
 }
