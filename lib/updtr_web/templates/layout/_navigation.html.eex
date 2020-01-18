@@ -1,34 +1,17 @@
-<nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
-  <div class="container">
-    <button class="navbar-toggler order-0 mr-2" type="button" data-widget="pushmenu" data-toggle="collapse" data-target="#navbarCollapse"
-      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<nav class="demo">
+  <a href="#" class="brand">
+    <span class="">Updtr.io</span>
+  </a>
+  <input id="bmenub" type="checkbox" class="show">
+  <label for="bmenub" class="burger pseudo button">&#9776;</label>
 
-    <a href="#" class="navbar-brand order-1">
-      <span class="brand-text font-weight-bold">Updtr.io</span>
-    </a>
-    <div class="collapse navbar-collapse order-3" id="navbarCollapse">
-      <!-- Left navbar links -->
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <%= link raw(~s'<i class="fas fa-home"></i> Home'), to: Routes.page_path(@conn, :index), class: "nav-link" %>
-        </li>
-        <li class="nav-item">
-          <%= link raw(~s'<i class="fas fa-id-card"></i> Contact'), to: Routes.page_path(@conn, :index), class: "nav-link" %>
-        </li>
-      </ul>
-    </div>
-
-    <!-- Right navbar links -->
-    <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
-      <li class="nav-item">
-        <%= if authenticated?(@conn) do %>
-          <%= link raw(~s'<i class="fa fa-sign-out-alt"></i> Log out'), to: Routes.auth_path(@conn, :delete), method: :delete, class: "nav-link" %>
-        <% else %>
-          <%= link raw(~s'<i class="fas fa-sign-in-alt"></i>'), to: Routes.auth_path(@conn, :new), class: "nav-link" %>
-        <% end %>
-      </li>
-    </ul>
+  <div class="menu">
+    <%= link raw(~s'<i class="fas fa-home"></i> Home'), to: Routes.page_path(@conn, :index), class: "nav-link" %>
+    <%= link raw(~s'<i class="fas fa-id-card"></i> Contact'), to: Routes.page_path(@conn, :index), class: "nav-link" %>
+    <%= if authenticated?(@conn) do %>
+      <%= link raw(~s'<i class="fa fa-sign-out-alt"></i> Log out'), to: Routes.auth_path(@conn, :delete), method: :delete, class: "nav-link" %>
+    <% else %>
+      <%= link raw(~s'<i class="fas fa-sign-in-alt"></i>'), to: Routes.auth_path(@conn, :new), class: "nav-link" %>
+    <% end %>
   </div>
 </nav>

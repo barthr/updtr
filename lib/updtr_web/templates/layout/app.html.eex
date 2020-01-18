@@ -20,15 +20,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
 </head>
 
-<body class="layout-top-nav" style="height: auto;">
+<body>
+  <%= render "_navigation.html", assigns %>
   <div class="wrapper">
-    <%= render "_navigation.html", assigns %>
 
-    <div class="content-wrapper">
+    <%# <div class="content-wrapper">
       <%= render "_main-content.html", assigns %>
-    </div>
+    <%# </div> %>
   </div>
-  <%= render "_footer.html", assigns %>
+  <%# <%= render "_footer.html", assigns %>
 
 
 </body>
