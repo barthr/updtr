@@ -1,6 +1,2 @@
-<div class="content pt-3">
-  <div class="container">
-    <%= render "_flash.html", assigns %>
-    <%= render @view_module, @view_template, assigns %>
-  </div>
-</div>
+<%= render "_flash.html", assigns %>
+<%= render @view_module, @view_template, assigns %>

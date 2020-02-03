@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html lang="en">
 
 <head>
@@ -10,11 +6,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/app.css") %>" />
+  <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/js/app.css") %>" />
   <title>Updtr</title>
 
-  <!-- Font Awesome Icons -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
     integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
 
@@ -23,13 +18,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <body>
   <%= render "_navigation.html", assigns %>
-  <div class="wrapper">
-
-    <%# <div class="content-wrapper">
+  <div class="content">
+    <div class="content-inside">
       <%= render "_main-content.html", assigns %>
-    <%# </div> %>
+    </div>
   </div>
-  <%# <%= render "_footer.html", assigns %>
+  <%= render "_footer.html", assigns %>
 
 
 </body>
