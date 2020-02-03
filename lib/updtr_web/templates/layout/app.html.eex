@@ -10,6 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
+  <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/app.css") %>" />
   <title>Updtr</title>
 
   <!-- Font Awesome Icons -->
