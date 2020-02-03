@@ -2,7 +2,7 @@
   <div class="col-md-4 mt-5">
     <div class="card">
       <div class="card-header">
-        New password 
+        New password
       </div>
       <div class="card-body login-card-body">
         <p class="login-box-msg">Please pick a new <strong>strong</strong> password</p>

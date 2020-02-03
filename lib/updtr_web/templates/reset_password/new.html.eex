@@ -1,32 +1,25 @@
-<div class="row justify-content-center mt-5">
-  <div class="col-md-4 mt-5">
-    <div class="card">
-      <div class="card-header">
-        Reset password
-      </div>
-      <div class="card-body login-card-body">
-        <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
-        <%= form_for @conn, Routes.reset_password_path(@conn, :create), [method: :post, as: :reset_password], fn f -> %>
-        <div class="input-group mb-3">
-          <%= email_input f, :email, placeholder: "Email", class: "form-control", required: true %>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
-            </div>
+<article class="card login">
+  <header>
+    <h3>Reset Password</h3>
+  </header>
+  <p>
+    You forgot your password? Here you an easily retrieve a new password.
+  </p>
+
+  <div class="login__body">
+    <%= form_for @conn, Routes.reset_password_path(@conn, :create), [method: :post, as: :reset_password], fn f -> %>
+      <div class="input-group mb-3">
+        <%= email_input f, :email, placeholder: "Email", class: "form-control", required: true %>
+        <div class="input-group-append">
+          <div class="input-group-text">
+            <span class="fas fa-envelope"></span>
           </div>
         </div>
-
-        <div class="row">
-          <div class="col-12">
-            <%= submit "Request new password", class: "btn btn-primary btn-block" %>
-          </div>
-
-        </div>
-        <% end %>
-        <p class="mt-3 mb-1">
-          <%= link "Login", to: Routes.auth_path(@conn, :new) %>
-        </p>
       </div>
-    </div>
+      <%= submit "Request new password", class: "btn btn-primary btn-block" %>
+    <% end %>
+    <%= link "Login", to: Routes.auth_path(@conn, :new) %>
   </div>
-</div>
+</article>
+
+
