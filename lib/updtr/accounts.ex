@@ -45,7 +45,6 @@ defmodule Updtr.Accounts do
       from p in PasswordReset,
         where: p.password_reset_token == ^reset_token,
         where: p.valid_until > ^DateTime.utc_now(),
-        where: p.reset_token_used == false,
         preload: [:user],
         select: p
 
@@ -167,9 +166,15 @@ defmodule Updtr.Accounts do
   end
 
   def reset_password(password_reset, params) do
-    password_reset
+    pwr_changeset = password_reset
     |> PasswordReset.changeset(params)
     |> Ecto.Changeset.cast_assoc(:user, with: &User.changeset/2)
-    |> Repo.update()
+
+
+    Multi.new()
+    |> Multi.update(:user, pwr_changeset) # update user (and also reset_password)
+    |> Multi.delete(:delete_reset, pwr_changeset) # delete reset_password
+    |> Repo.transaction()
+
   end
 end

@@ -3,11 +3,6 @@ defmodule UpdtrWeb.Auth.ErrorHandler do
   use UpdtrWeb, :controller
 
   @behaviour Guardian.Plug.ErrorHandler
-
-  #         :unauthorized *
-  #         :invalid_token *
-  #         :already_authenticated *
-  #         :no_resource_found
   @impl Guardian.Plug.ErrorHandler
 
   def auth_error(conn, {type, _reason}, _opts)

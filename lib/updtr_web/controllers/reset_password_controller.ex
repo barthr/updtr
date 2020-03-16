@@ -58,20 +58,14 @@ defmodule UpdtrWeb.ResetPasswordController do
       changeset: %{changeset | action: :update},
       password_reset: password_reset
     )
-
-    # |> redirect(to: Routes.reset_password_path(conn, :edit, token: token))
   end
 
-  def update(conn, %{
-        "password_reset" => password_reset_params
-      }) do
+  def update(conn, %{"password_reset" => password_reset_params}) do
     password_reset =
-      Accounts.get_password_reset_by_token(password_reset_params["password_reset_token"])
+      password_reset_params["password_reset_token"]
+      |> Accounts.get_password_reset_by_token()
 
-    case Accounts.reset_password(
-           password_reset,
-           Map.put(password_reset_params, "reset_token_used", true)
-         ) do
+    case Accounts.reset_password(password_reset, password_reset_params) do
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", changeset: changeset, password_reset: password_reset)
 

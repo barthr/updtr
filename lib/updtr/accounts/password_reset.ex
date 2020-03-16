@@ -9,7 +9,6 @@ defmodule Updtr.Accounts.PasswordReset do
   schema "password_resets" do
     field :password_reset_token, :string
     field :valid_until, :naive_datetime
-    field :reset_token_used, :boolean
 
     belongs_to(:user, User)
     timestamps()
@@ -18,15 +17,9 @@ defmodule Updtr.Accounts.PasswordReset do
   @doc false
   def changeset(verification, attrs \\ %{}) do
     verification
-    |> cast(attrs, [:password_reset_token, :user_id, :reset_token_used])
+    |> cast(attrs, [:password_reset_token, :user_id])
     |> foreign_key_constraint(:user_id)
     |> validate_required([:password_reset_token, :user_id])
     |> unique_constraint(:password_reset_token)
-  end
-
-  def used_changeset(verification, attrs) do
-    verification
-    |> cast(attrs, [:reset_token_used, :user_id])
-    |> validate_required([:reset_token_used, :user_id])
   end
 end
