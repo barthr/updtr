@@ -1,37 +1,45 @@
-@import "../node_modules/picnic/picnic.min.css";
+@import "../node_modules/semantic-ui-css/semantic.min.css";
+@import "../node_modules/semantic-ui-css/components/icon.min.css";
 
 html,
 body {
   font-family: "Lato", sans-serif;
   height: 100%;
+  background-color: #DADADA;
 }
 
-nav {
-  position: relative;
+body > .grid {
+  height: 100%;
 }
+.column {
+  max-width: 450px;
+}
+// nav {
+//   position: relative;
+// }
 
-body {
-  display: flex;
-  flex-direction: column;
-}
-.content {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  flex: 1 0 auto;
-}
-.footer {
-  display: flex;
-  justify-content: center;
-  flex-shrink: 0;
-  p {
-    color: hsl(0, 0%, 45%);
-  }
-}
+// body {
+//   display: flex;
+//   flex-direction: column;
+// }
+// .content {
+//   display: flex;
+//   align-items: stretch;
+//   justify-content: center;
+//   flex: 1 0 auto;
+// }
+// .footer {
+//   display: flex;
+//   justify-content: center;
+//   flex-shrink: 0;
+//   p {
+//     color: hsl(0, 0%, 45%);
+//   }
+// }
 
-.login {
-  margin-top: 15%;
-  .login__body {
-    padding: 15px;
-  }
-}
+// .login {
+//   margin-top: 15%;
+//   .login__body {
+//     padding: 15px;
+//   }
+// }

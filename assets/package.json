@@ -7,13 +7,13 @@
   "license": "ISC",
   "scripts": {
     "clean": "rm dist/bundle.js",
-    "deploy": "cp -R static/* ../priv/static/ && parcel build js/app.js --out-dir ../priv/static/js --public-url /js --no-cache",
-    "watch": "cp -R static/* ../priv/static/ && parcel watch js/app.js --out-dir ../priv/static/js --public-url /js"
+    "deploy": "cp -R static/* ../priv/static/ && ./node_modules/.bin/parcel build js/app.js --out-dir ../priv/static/js --public-url /js --no-cache",
+    "watch": "cp -R static/* ../priv/static/ && ./node_modules/.bin/parcel watch js/app.js --out-dir ../priv/static/js --public-url /js"
   },
   "dependencies": {
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
-    "picnic": "^6.5.2"
+    "semantic-ui-css": "^2.4.1"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.4",

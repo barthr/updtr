@@ -1,49 +1,27 @@
-    <article class="card login">
-      <header>
-        <h3>Sign in</h3>
-      </header>
-
-      <div class="login__body">
-        <%= form_for @conn, Routes.auth_path(@conn, :create), [method: :post, as: :user], fn f -> %>
-        <div class="input-group mb-3">
-          <%= email_input f, :email, placeholder: "Email", class: "form-control", required: true %>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
-            </div>
-          </div>
-        </div>
-
-        <div class="input-group mb-3">
-          <%= password_input f, :password, placeholder: "Password", class: "form-control", required: true %>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="remember">
-              <label for="remember">
-                Remember Me
-              </label>
-            </div>
-          </div>
-
-          <div class="col-4">
-            <%= submit "Sign in", class: "btn btn-primary btn-block" %>
-          </div>
-
-        </div>
-        <% end %>
-        <p class="mb-1">
-          <%= link "Sign up", to: Routes.user_path(@conn, :new) %>
-        </p>
-
-        <p class="mb-1">
-          <%= link "I forgot my password", to: Routes.reset_password_path(@conn, :new) %>
-        </p>
-      </div>
+<div class="column">
+  <h2 class="ui teal header">
+    <div class="content">
+      Log-in to your account
     </div>
+  </h2>
+  <%= form_for @conn, Routes.auth_path(@conn, :create), [method: :post, as: :user, class: "ui large form"], fn f -> %>
+    <div class="ui stacked segment">
+      <div class="field">
+        <div class="ui left icon input">
+          <i class="user icon"></i>
+          <%= email_input f, :email, placeholder: "Email", class: "form-control", required: true %>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui left icon input">
+          <i class="lock icon"></i>
+          <%= password_input f, :password, placeholder: "Password", class: "form-control", required: true %>
+        </div>
+      </div>
+      <%= submit "Sign in", class: "ui fluid large teal submit button" %>
+    </div>
+  <% end %>
+  <div class="ui message">
+    <%= link "Sign up", to: Routes.user_path(@conn, :new) %> or <%= link "I forgot my password", to: Routes.reset_password_path(@conn, :new) %>
+  </div>
+</div>
