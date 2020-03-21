@@ -9,12 +9,18 @@ defmodule UpdtrWeb.ErrorHelpers do
   Generates tag for inlined form input errors.
   """
   def error_tag(form, field) do
-    Enum.map(Keyword.get_values(form.errors, field), fn error ->
-      content_tag(:span, translate_error(error), class: "invalid-feedback")
-    end)
+    errors =
+      Enum.map(Keyword.get_values(form.errors, field), fn error ->
+        content_tag(:span, translate_error(error), class: "error")
+      end)
+
+    case errors do
+      [] -> nil
+      val -> val
+    end
   end
 
-
+  @spec error_class(atom | %{errors: keyword}, atom) :: <<_::96, _::_*88>>
   def error_class(form, field) do
     if Keyword.get_values(form.errors, field) |> length > 0 do
       "form-control is-invalid"

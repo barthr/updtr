@@ -1,23 +1,11 @@
 <div class="column">
   <h2 class="ui teal header">
-    <div class="content">
-      Log-in to your account
-    </div>
+  	Log-in to your account
   </h2>
   <%= form_for @conn, Routes.auth_path(@conn, :create), [method: :post, as: :user, class: "ui large form"], fn f -> %>
     <div class="ui stacked segment">
-      <div class="field error">
-        <div class="ui left icon input">
-          <i class="user icon"></i>
-          <%= email_input f, :email, placeholder: "Email", class: "form-control", required: true %>
-        </div>
-      </div>
-      <div class="field error">
-        <div class="ui left icon input">
-          <i class="lock icon"></i>
-          <%= password_input f, :password, placeholder: "Password", class: "form-control", required: true %>
-        </div>
-      </div>
+      <%= input f, :email, label: "true", required: true, prepend_icon: "user" %>
+      <%= input f, :password, required: true, prepend_icon: "lock" %>
       <%= submit "Sign in", class: "ui fluid large teal submit button" %>
     </div>
     <%= if get_flash(@conn, :error) do %>

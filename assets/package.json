@@ -11,6 +11,7 @@
     "watch": "cp -R static/* ../priv/static/ && ./node_modules/.bin/parcel watch js/app.js --out-dir ../priv/static/js --public-url /js"
   },
   "dependencies": {
+    "admin-lte": "^3.0.2",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
     "semantic-ui-css": "^2.4.1"

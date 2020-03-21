@@ -9,7 +9,7 @@
   <div class="login__body">
     <%= form_for @conn, Routes.reset_password_path(@conn, :create), [method: :post, as: :reset_password], fn f -> %>
       <div class="input-group mb-3">
-        <%= email_input f, :email, placeholder: "Email", class: "form-control", required: true %>
+        <%= input f, :email, placeholder: "Email", required: true %>
         <div class="input-group-append">
           <div class="input-group-text">
             <span class="fas fa-envelope"></span>

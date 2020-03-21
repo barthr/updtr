@@ -39,6 +39,7 @@ defmodule UpdtrWeb do
       use Phoenix.HTML
       import UpdtrWeb.ErrorHelpers
       import UpdtrWeb.Gettext
+      import UpdtrWeb.InputHelpers
       alias UpdtrWeb.Router.Helpers, as: Routes
     end
   end

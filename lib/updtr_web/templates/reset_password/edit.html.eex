@@ -9,27 +9,25 @@
         <%= form_for @changeset, Routes.reset_password_path(@conn, :update), [class: "needs-validation"], fn f -> %>
         <div class="input-group mb-3">
           <%= inputs_for f, :user, fn u -> %>
-            <%= password_input u, :password, placeholder: "Password", class: error_class(u, :password), required: true, minlength: 10, maxlength: 32 %>
+            <%= input u, :password, placeholder: "Password", required: true, minlength: 10, maxlength: 32 %>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
               </div>
             </div>
-            <%= error_tag u, :password %>
           <% end %>
         </div>
 
         <div class="input-group mb-3">
-          <%= password_input f, :password_confirm, placeholder: "Confirm password", class: error_class(f, :password_confirm), required: true, minlength: 10, maxlength: 32 %>
+          <%= input f, :password_confirm, placeholder: "Confirm password", required: true, minlength: 10, maxlength: 32 %>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
             </div>
           </div>
-          <%= error_tag f, :password_confirm %>
         </div>
 
-        <%= hidden_input f, :password_reset_token, value: @password_reset.password_reset_token %>
+        <%= input f, :password_reset_token, value: @password_reset.password_reset_token, hidden: true %>
 
 
 
