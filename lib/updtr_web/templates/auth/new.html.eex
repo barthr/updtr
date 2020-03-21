@@ -5,8 +5,8 @@
 		</h2>
 		<%= form_for @conn, Routes.auth_path(@conn, :create), [method: :post, as: :user, class: "ui large form error"], fn f -> %>
 			<div class="ui large form">
-				<%= input f, :email, label: "Email", required: true, prepend_icon: "user" %>
-				<%= input f, :password, label: "Password", required: true, prepend_icon: "lock" %>
+				<%= input f, :email, label: "Email", placeholder: "Email", required: true, prepend_icon: "user" %>
+				<%= input f, :password, label: "Password", placeholder: "Password", required: true, prepend_icon: "lock" %>
 				<%= submit "Sign in", class: "ui fluid large primary button" %>
 			</div>
 			<%= if get_flash(@conn, :error) do %>

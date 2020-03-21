@@ -9,7 +9,7 @@ defmodule UpdtrWeb.InputHelpers do
 
 
     wrapper_options = [class: "field #{state_class(form, field)}"]
-    input_options = [] # To pass custom options to input
+    input_options = options # To pass custom options to input
 
     validations = Phoenix.HTML.Form.input_validations(form, field)
     input_options = Keyword.merge(validations, input_options)
@@ -17,10 +17,7 @@ defmodule UpdtrWeb.InputHelpers do
     content_tag :div, wrapper_options do
       input = input(type, form, field, input_options)
       error = UpdtrWeb.ErrorHelpers.error_tag(form, field) || ""
-
-      html_elements =
-        [input, error]
-      #        |> prepend_if_true(label_value, )
+      html_elements = [input, error]
 
       if prepend_icon_value do
         content_tag :div, class: "ui left icon input" do
