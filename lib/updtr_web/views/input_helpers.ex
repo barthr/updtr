@@ -20,14 +20,16 @@ defmodule UpdtrWeb.InputHelpers do
 
       html_elements =
         [input, error]
-        |> prepend_if_true(label_value != "", [label(form, field, label_value)])
+      #        |> prepend_if_true(label_value, )
 
       if prepend_icon_value do
         content_tag :div, class: "ui left icon input" do
           [content_tag(:i, "", class: "icon #{prepend_icon_value}")] ++ html_elements
         end
+        |> prepend_if_true(label_value, [label(form, field, label_value)])
       else
         html_elements
+        |> prepend_if_true(label_value, [label(form, field, label_value)])
       end
     end
   end
