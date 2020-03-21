@@ -1,19 +1,31 @@
 @import "../node_modules/semantic-ui-css/semantic.min.css";
 @import "../node_modules/semantic-ui-css/components/icon.min.css";
 
-html,
+html {
+  min-height: 100%;
+  height: unset;
+}
+
 body {
   font-family: "Lato", sans-serif;
-  height: 100%;
   background-color: #DADADA;
 }
 
-body > .grid {
-  height: 100%;
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 0;
+  background-color: #f5f5f5;
+
+  p {
+    color: hsl(0, 0%, 45%);
+  }
 }
-.column {
-  max-width: 450px;
-}
+
+
 // nav {
 //   position: relative;
 // }

@@ -1,20 +1,25 @@
-<div class="column">
-  <h2 class="ui teal header">
-  	Log-in to your account
-  </h2>
-  <%= form_for @conn, Routes.auth_path(@conn, :create), [method: :post, as: :user, class: "ui large form error"], fn f -> %>
-    <div class="ui stacked segment">
-      <%= input f, :email, label: "true", required: true, prepend_icon: "user" %>
-      <%= input f, :password, required: true, prepend_icon: "lock" %>
-      <%= submit "Sign in", class: "ui fluid large teal submit button" %>
-    </div>
-    <%= if get_flash(@conn, :error) do %>
-      <div class="ui message error">
-        <%= get_flash(@conn, :error) %>
-      </div>
-    <% end %>
-  <% end %>
-  <div class="ui message">
-    <%= link "Sign up", to: Routes.user_path(@conn, :new) %> or <%= link "I forgot my password", to: Routes.reset_password_path(@conn, :new) %>
-  </div>
+<div class="ui center aligned grid">
+	<div id="ui container">
+		<h2 class="ui huge header">
+		    Sign in
+		</h2>
+		<%= form_for @conn, Routes.auth_path(@conn, :create), [method: :post, as: :user, class: "ui large form error"], fn f -> %>
+			<div class="ui large form">
+				<%= input f, :email, label: "Email", required: true, prepend_icon: "user" %>
+				<%= input f, :password, label: "Password", required: true, prepend_icon: "lock" %>
+				<%= submit "Sign in", class: "ui fluid large primary button" %>
+			</div>
+			<%= if get_flash(@conn, :error) do %>
+				<div class="ui compact message error">
+				  <i class="close icon"></i>
+				  <div class="header">
+					</div>
+					<p><%= get_flash(@conn, :error) %></p>
+				</div>
+			<% end %>
+		<% end %>
+		<div class="ui message">
+			<%= link "Sign up", to: Routes.user_path(@conn, :new) %> or <%= link "I forgot my password", to: Routes.reset_password_path(@conn, :new) %>
+		</div>
+	</div>
 </div>

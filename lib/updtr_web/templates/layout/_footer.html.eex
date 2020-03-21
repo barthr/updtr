@@ -1,3 +1,5 @@
-<footer class="footer">
-  <p>Copyright © 2019 Updtr.io. All rights reserved.</p>
+<footer>
+   <div class="ui container">
+  		<p>Copyright © 2019 Updtr.io. All rights reserved.</p>
+	</div>
 </footer>

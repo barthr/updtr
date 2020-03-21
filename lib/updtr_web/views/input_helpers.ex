@@ -4,8 +4,9 @@ defmodule UpdtrWeb.InputHelpers do
 
   def input(form, field, options \\ []) do
     type = options[:using] || Phoenix.HTML.Form.input_type(form, field)
-    label_value = options[:label] || nil # humanize(field)
+    label_value = options[:label] || humanize(field)
     prepend_icon_value = options[:prepend_icon] || nil
+
 
     wrapper_options = [class: "field #{state_class(form, field)}"]
     input_options = [] # To pass custom options to input
@@ -16,14 +17,14 @@ defmodule UpdtrWeb.InputHelpers do
     content_tag :div, wrapper_options do
       input = input(type, form, field, input_options)
       error = UpdtrWeb.ErrorHelpers.error_tag(form, field) || ""
-      html_elements = [input, error]
 
-      html_elements
-      |> prepend_if_true(label_value, [label(form, field, label_value)])
+      html_elements =
+        [input, error]
+        |> prepend_if_true(label_value != "", [label(form, field, label_value)])
 
       if prepend_icon_value do
         content_tag :div, class: "ui left icon input" do
-          html_elements
+          [content_tag(:i, "", class: "icon #{prepend_icon_value}")] ++ html_elements
         end
       else
         html_elements

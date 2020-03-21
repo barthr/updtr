@@ -19,6 +19,7 @@
   "devDependencies": {
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-stdin": "^0.1.1",
+    "prettier": "1.19.1",
     "sass": "^1.26.3"
   }
 }

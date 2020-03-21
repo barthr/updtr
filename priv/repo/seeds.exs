@@ -11,7 +11,8 @@
 # and so on) as they will fail if something goes wrong.
 %Updtr.Accounts.User{}
 |> Updtr.Accounts.User.changeset(%{
-  email: "1@1.com",
-  password: "testingthisout"
+  email: "test@test.com",
+  password: "1234567890",
+  email_validated: true
 })
 |> Updtr.Repo.insert!()

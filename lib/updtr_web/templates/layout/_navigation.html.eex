@@ -1,17 +1,13 @@
-<nav>
-  <a href="/" class="brand">
-    <span class="">Updtr.io</span>
-  </a>
-  <input id="bmenub" type="checkbox" class="show">
-  <label for="bmenub" class="burger pseudo button">&#9776;</label>
-
-  <div class="menu">
-    <%= link raw(~s'<i class="fas fa-home"></i> Home'), to: Routes.page_path(@conn, :index), class: "pseudo button" %>
-    <%= link raw(~s'<i class="fas fa-id-card"></i> Contact'), to: Routes.page_path(@conn, :index), class: "pseudo button" %>
-    <%= if authenticated?(@conn) do %>
-      <%= link raw(~s'<i class="fa fa-sign-out-alt"></i> Log out'), to: Routes.auth_path(@conn, :delete), method: :delete, class: "pseudo button" %>
-    <% else %>
-      <%= link raw(~s'<i class="fas fa-sign-in-alt"></i> Log in'), to: Routes.auth_path(@conn, :new), class: "pseudo button" %>
-    <% end %>
-  </div>
-</nav>
+<div class="ui stackable inverted fixed borderless huge menu">
+	<div class="ui container">
+		<a class="header item">Updtr</a>
+		<%= link raw(~s'<i class="grid layout icon home"></i> Home'), to: Routes.page_path(@conn, :index), class: "item" %>
+		<div class="right item">
+			<%= if authenticated?(@conn) do %>
+    		<%= link raw(~s'<i class="grid icon lock"></i> Log out'), to: Routes.auth_path(@conn, :delete), method: :delete%>
+    	<% else %>
+    		<%= link raw(~s'<i class="grid icon unlock"></i> Log in'), to: Routes.auth_path(@conn, :new) %>
+    	<% end %>
+		</div>
+	</div>
+</div>
