@@ -4,15 +4,15 @@
       Log-in to your account
     </div>
   </h2>
-  <%= form_for @conn, Routes.auth_path(@conn, :create), [method: :post, as: :user, class: "ui large form"], fn f -> %>
+  <%= form_for @conn, Routes.auth_path(@conn, :create), [method: :post, as: :user, class: "ui large form error"], fn f -> %>
     <div class="ui stacked segment">
-      <div class="field">
+      <div class="field error">
         <div class="ui left icon input">
           <i class="user icon"></i>
           <%= email_input f, :email, placeholder: "Email", class: "form-control", required: true %>
         </div>
       </div>
-      <div class="field">
+      <div class="field error">
         <div class="ui left icon input">
           <i class="lock icon"></i>
           <%= password_input f, :password, placeholder: "Password", class: "form-control", required: true %>
@@ -20,6 +20,11 @@
       </div>
       <%= submit "Sign in", class: "ui fluid large teal submit button" %>
     </div>
+    <%= if get_flash(@conn, :error) do %>
+      <div class="ui message error">
+        <%= get_flash(@conn, :error) %>
+      </div>
+    <% end %>
   <% end %>
   <div class="ui message">
     <%= link "Sign up", to: Routes.user_path(@conn, :new) %> or <%= link "I forgot my password", to: Routes.reset_password_path(@conn, :new) %>
