@@ -2,7 +2,7 @@
   <h2 class="ui teal header">
   	Log-in to your account
   </h2>
-  <%= form_for @conn, Routes.auth_path(@conn, :create), [method: :post, as: :user, class: "ui large form"], fn f -> %>
+  <%= form_for @conn, Routes.auth_path(@conn, :create), [method: :post, as: :user, class: "ui large form error"], fn f -> %>
     <div class="ui stacked segment">
       <%= input f, :email, label: "true", required: true, prepend_icon: "user" %>
       <%= input f, :password, required: true, prepend_icon: "lock" %>
