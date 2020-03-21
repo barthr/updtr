@@ -14,6 +14,7 @@ defmodule UpdtrWeb.ErrorHelpers do
     end)
   end
 
+
   def error_class(form, field) do
     if Keyword.get_values(form.errors, field) |> length > 0 do
       "form-control is-invalid"

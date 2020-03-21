@@ -4,7 +4,7 @@
       Log-in to your account
     </div>
   </h2>
-  <%= form_for @conn, Routes.auth_path(@conn, :create), [method: :post, as: :user, class: "ui large form error"], fn f -> %>
+  <%= form_for @conn, Routes.auth_path(@conn, :create), [method: :post, as: :user, class: "ui large form"], fn f -> %>
     <div class="ui stacked segment">
       <div class="field error">
         <div class="ui left icon input">
