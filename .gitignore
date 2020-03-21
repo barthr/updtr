@@ -30,3 +30,5 @@ updtr-*.tar
 /.elixir_ls/
 
 /assets/node_modules/
+
+.idea
