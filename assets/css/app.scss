@@ -4,6 +4,7 @@
 html {
   min-height: 100%;
   height: unset;
+  position: relative;
 }
 
 body {
@@ -17,17 +18,18 @@ footer {
   width: 100%;
   padding-top: 20px;
   padding-bottom: 20px;
-  margin-bottom: 0;
   background-color: #f5f5f5;
-
   p {
+    text-align: center;
     color: hsl(0, 0%, 45%);
   }
 }
 
 
+
 // nav {
 //   position: relative;
+
 // }
 
 // body {

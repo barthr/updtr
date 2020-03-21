@@ -1,4 +1,4 @@
-<div class="ui stackable inverted fixed borderless huge menu">
+<div class="ui inverted fixed borderless huge menu">
 	<div class="ui container">
 		<a class="header item">Updtr</a>
 		<%= link raw(~s'<i class="grid layout icon home"></i> Home'), to: Routes.page_path(@conn, :index), class: "item" %>
