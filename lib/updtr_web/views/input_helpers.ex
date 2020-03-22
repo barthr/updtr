@@ -17,15 +17,16 @@ defmodule UpdtrWeb.InputHelpers do
     content_tag :div, wrapper_options do
       input = input(type, form, field, input_options)
       error = UpdtrWeb.ErrorHelpers.error_tag(form, field) || ""
-      html_elements = [input, error]
 
       if prepend_icon_value do
-        content_tag :div, class: "ui left icon input" do
-          [content_tag(:i, "", class: "icon #{prepend_icon_value}")] ++ html_elements
-        end
-        |> prepend_if_true(label_value, [label(form, field, label_value)])
+        elements =
+          content_tag :div, class: "ui left icon input" do
+            [content_tag(:i, "", class: "icon #{prepend_icon_value}")] ++ input
+          end
+          |> prepend_if_true(label_value, [label(form, field, label_value)])
+        [elements] ++ [error]
       else
-        html_elements
+        [input, error]
         |> prepend_if_true(label_value, [label(form, field, label_value)])
       end
     end

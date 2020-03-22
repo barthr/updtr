@@ -11,7 +11,7 @@ defmodule UpdtrWeb.ErrorHelpers do
   def error_tag(form, field) do
     errors =
       Enum.map(Keyword.get_values(form.errors, field), fn error ->
-        content_tag(:span, translate_error(error), class: "error")
+        content_tag(:div, translate_error(error), class: "ui basic red pointing prompt label transition visible")
       end)
 
     case errors do
