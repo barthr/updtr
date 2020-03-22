@@ -1,9 +1,15 @@
-<div class="ui center aligned grid">
-	<div id="ui container">
+<div class="ui two column doubling centered grid">
+	<div class="column">
 		<h2 class="ui huge header">
 		    Sign in
 		</h2>
-		<%= form_for @conn, Routes.auth_path(@conn, :create), [method: :post, as: :user, class: "ui large form error"], fn f -> %>
+		<div class="ui attached message">
+			<div class="header">
+				Welcome to Updtr!
+			</div>
+			<p>Fill in the following details to sign in your account</p>
+		</div>
+		<%= form_for @conn, Routes.auth_path(@conn, :create), [method: :post, as: :user, class: "ui form attached fluid segment"], fn f -> %>
 			<div class="ui large form">
 				<%= input f, :email, label: "Email", placeholder: "Email", required: true, prepend_icon: "user" %>
 				<%= input f, :password, label: "Password", placeholder: "Password", required: true, prepend_icon: "lock" %>
@@ -18,7 +24,8 @@
 				</div>
 			<% end %>
 		<% end %>
-		<div class="ui message">
+		<div class="ui bottom attached warning message">
+			<i class="icon help"></i>
 			<%= link "Sign up", to: Routes.user_path(@conn, :new) %> or <%= link "I forgot my password", to: Routes.reset_password_path(@conn, :new) %>
 		</div>
 	</div>

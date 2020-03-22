@@ -1,25 +1,24 @@
-<article class="card login">
-  <header>
-    <h3>Reset Password</h3>
-  </header>
-  <p>
-    You forgot your password? Here you an easily retrieve a new password.
-  </p>
-
-  <div class="login__body">
-    <%= form_for @conn, Routes.reset_password_path(@conn, :create), [method: :post, as: :reset_password], fn f -> %>
-      <div class="input-group mb-3">
-        <%= input f, :email, placeholder: "Email", required: true %>
-        <div class="input-group-append">
-          <div class="input-group-text">
-            <span class="fas fa-envelope"></span>
-          </div>
-        </div>
+<div class="ui two column doubling centered grid">
+  <div class="column">
+		<h2 class="ui huge header">
+			Reset Password
+		</h2>
+    <div class="ui attached message">
+      <div class="header">
+        You forgot your password?
       </div>
-      <%= submit "Request new password", class: "btn btn-primary btn-block" %>
+      <p>Here you an easily retrieve a new password.</p>
+    </div>
+    <%= form_for @conn, Routes.reset_password_path(@conn, :create), [method: :post, as: :reset_password, class: "ui form attached fluid segment"], fn f -> %>
+      <div class="ui large form">
+        <%= input f, :email, placeholder: "Email", required: true, prepend_icon: "envelope" %>
+      	<%= submit "Request new password", class: "ui fluid large submit primary button" %>
+      </div>
     <% end %>
-    <%= link "Login", to: Routes.auth_path(@conn, :new) %>
+		<div class="ui bottom attached warning message">
+			<i class="icon info"></i>
+			Back to <%= link "Login", to: Routes.auth_path(@conn, :new) %>
+		</div>
   </div>
-</article>
-
+</div>
 
