@@ -1,15 +1,12 @@
-<%= if get_flash(@conn, :error) do %>
-<div class="ui message red">
-  <div class="header">
-    <%= get_flash(@conn, :error) %>
-  </div>
+<div class="ui centered grid">
+  <div class="sixteen wide mobile column eight wide computer">
+		<%= for {level, message} <- get_flash(@conn) do %>
+			<div class="ui message <%= flash_class(level) %> transition">
+				<i class="close icon"></i>
+				<div class="header">
+					<%= message %>
+				</div>
+			</div>
+		<% end %>
+	</div>
 </div>
-<% end %>
-
-<%= if get_flash(@conn, :info) do %>
-<div class="ui message blue">
-  <div class="header">
-    <%= get_flash(@conn, :info) %>
-  </div>
-</div>
-<% end %>

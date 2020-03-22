@@ -46,4 +46,13 @@ defmodule UpdtrWeb.InputHelpers do
   defp input(type, form, field, input_options) do
     apply(Phoenix.HTML.Form, type, [form, field, input_options])
   end
+
+  def flash_class(key) do
+    case key do
+      "error" -> "red"
+      "warning" -> "orange"
+      "info" -> "blue"
+      "success" -> "green"
+    end
+  end
 end

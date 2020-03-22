@@ -1,1 +1,2 @@
+<%= render "_flash.html", assigns %>
 <%= render @view_module, @view_template, assigns %>
