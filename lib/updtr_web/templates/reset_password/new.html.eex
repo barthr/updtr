@@ -7,7 +7,7 @@
       <div class="header">
         You forgot your password?
       </div>
-      <p>Here you an easily retrieve a new password.</p>
+      <p>Here you can easily retrieve a new password.</p>
     </div>
     <%= form_for @conn, Routes.reset_password_path(@conn, :create), [method: :post, as: :reset_password, class: "ui form attached fluid segment"], fn f -> %>
       <div class="ui large form">
