@@ -1,6 +1,7 @@
 defmodule Updtr.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Updtr.Bookmarks.Mark
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -11,9 +12,12 @@ defmodule Updtr.Accounts.User do
     field :password_hash, :string
     field :activation_token, :string
 
+
+    has_many :bookmarks, Mark
+
     # Add support for microseconds at the language level
     # for this specific schema
-    timestamps(type: :utc_datetime_usec)
+    timestamps()
   end
 
   @doc false
