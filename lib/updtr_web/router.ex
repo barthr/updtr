@@ -36,21 +36,27 @@ defmodule UpdtrWeb.Router do
       singleton: true
 
     post "/users", UserController, :create
-
-    # post "/users/login", UserController, :sign_in
-    # post "/users/signup", UserController, :sign_up
-    # get "/users/verify-email", UserController, :activate_user
-    # put "/users/resend-verification-email", UserController, :resend_verification
-
-    # post "/users/request-password-reset", PasswordResetController, :request_reset_password
-    # post "/users/reset-password", PasswordResetController, :reset_password
   end
 
   scope "/", UpdtrWeb do
-    pipe_through [:browser, :auth, :require_auth]
+    pipe_through [:browser, :auth, :require_auth, :authenticate_user]
 
     get "/", PageController, :index
 
     resources "/users", UserController, except: [:new, :edit], singleton: true
+    resources "/marks", MarkController
+  end
+
+  defp authenticate_user(conn, _) do
+    case Guardian.Plug.current_resource(conn) do
+      nil ->
+        conn
+        |> put_flash(:error, "Login required")
+        |> redirect(to: "/login")
+        |> halt()
+
+      user ->
+        assign(conn, :current_user, user)
+    end
   end
 end

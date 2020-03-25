@@ -1,0 +1,28 @@
+<h1>Show Mark</h1>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @mark.title %>
+  </li>
+
+  <li>
+    <strong>Url:</strong>
+    <%= @mark.url %>
+  </li>
+
+  <li>
+    <strong>Hashed url:</strong>
+    <%= @mark.hashed_url %>
+  </li>
+
+  <li>
+    <strong>Content:</strong>
+    <%= @mark.content %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.mark_path(@conn, :edit, @mark) %></span>
+<span><%= link "Back", to: Routes.mark_path(@conn, :index) %></span>
