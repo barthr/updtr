@@ -1,5 +1,5 @@
 <div class="ui grid">
-	<div class="ui centered divided aligned basic segment column eight wide computer sixteen wide tablet">
+	<div class="ui segment centered divided column eight wide computer sixteen wide tablet">
 		<div class="ui fluid icon input large">
 			<input class="prompt" type="text" placeholder="Press '/' to search">
 			<i class="inverted circular search link icon"></i>
@@ -9,8 +9,8 @@
 		</div>
 		<%= form_for @changeset, Routes.mark_path(@conn, :create), fn f -> %>
 			<div class="ui form fluid right labeled input">
-				<%= text_input f, :url, type: :url, required: true, placeholder: "https://www.example.com", style: "border-color: white" %>
-				<%= submit class: "ui label icon black button" do %>
+				<%= text_input f, :url, type: :url, required: true, placeholder: "https://www.example.com" %>
+				<%= submit class: "ui blue label icon button" do %>
 					<i class="add icon"></i>
 				<% end %>
 			</div>
