@@ -1,50 +1,20 @@
 <div class="ui grid">
-	<div class="ui center aligned basic segment column sixteen wide">
-		<div class="ui icon input" style="width: 500px">
+	<div class="ui centered divided aligned basic segment column eight wide computer sixteen wide tablet">
+		<div class="ui fluid icon input large">
 			<input class="prompt" type="text" placeholder="Press '/' to search">
 			<i class="inverted circular search link icon"></i>
 		</div>
 		<div class="ui horizontal divider">
 			Or
 		</div>
-		<div class="ui blue labeled icon button">
-			Create New Bookmark
-			<i class="add icon"></i>
+		<div class="ui fluid right labeled input">
+			<input type="text" placeholder="https://www.example.com" style="border-color: white">
+			<%= link to: Routes.mark_path(@conn, :new), class: "ui label icon black button" do %>
+			  <i class="add icon"></i>
+			<% end %>
 		</div>
 	</div>
 
 	<div class="column sixteen wide">
-		<h1>Listing Bookmarks</h1>
-
-		<table>
-			<thead>
-				<tr>
-					<th>Title</th>
-					<th>Url</th>
-					<th>Hashed url</th>
-					<th>Content</th>
-
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-		<%= for mark <- @bookmarks do %>
-				<tr>
-					<td><%= mark.title %></td>
-					<td><%= mark.url %></td>
-					<td><%= mark.hashed_url %></td>
-					<td><%= mark.content %></td>
-
-					<td>
-						<span><%= link "Show", to: Routes.mark_path(@conn, :show, mark) %></span>
-						<span><%= link "Edit", to: Routes.mark_path(@conn, :edit, mark) %></span>
-						<span><%= link "Delete", to: Routes.mark_path(@conn, :delete, mark), method: :delete, data: [confirm: "Are you sure?"] %></span>
-					</td>
-				</tr>
-		<% end %>
-			</tbody>
-		</table>
-
-		<span><%= link "New Mark", to: Routes.mark_path(@conn, :new) %></span>
 	</div>
 </div>
