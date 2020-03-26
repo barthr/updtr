@@ -7,14 +7,32 @@
 		<div class="ui horizontal divider">
 			Or
 		</div>
-		<div class="ui fluid right labeled input">
-			<input type="text" placeholder="https://www.example.com" style="border-color: white">
-			<%= link to: Routes.mark_path(@conn, :new), class: "ui label icon black button" do %>
-			  <i class="add icon"></i>
-			<% end %>
-		</div>
+		<%= form_for @changeset, Routes.mark_path(@conn, :create), fn f -> %>
+			<div class="ui form fluid right labeled input">
+				<%= text_input f, :url, type: :url, required: true, placeholder: "https://www.example.com", style: "border-color: white" %>
+				<%= submit class: "ui label icon black button" do %>
+					<i class="add icon"></i>
+				<% end %>
+			</div>
+			<%= error_tag f, :url %>
+		<% end %>
 	</div>
 
-	<div class="column sixteen wide">
+  <div class="row">
+		<div class="ui column centered twelve wide segment">
+			<div class="ui middle aligned divided list">
+          <%= for mark <- @bookmarks do %>
+          <div class="item" style="padding: 10px;">
+            <div class="right floated content">
+              <%= button "Delete", class: "ui icon red button", to: Routes.mark_path(@conn, :delete ,mark), method: :delete %>
+            </div>
+            <img class="ui avatar image" src="/images/img.png">
+            <div class="content">
+              <%= mark.url %>
+            </div>
+          </div>
+          <% end %>
+      </div>
+		</div>
 	</div>
 </div>

@@ -5,10 +5,6 @@
     </div>
   <% end %>
 
-  <%= label f, :title %>
-  <%= textarea f, :title %>
-  <%= error_tag f, :title %>
-
   <%= label f, :url %>
   <%= textarea f, :url %>
   <%= error_tag f, :url %>

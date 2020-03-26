@@ -6,23 +6,29 @@ defmodule UpdtrWeb.MarkController do
 
   def index(conn, _params) do
     bookmarks = Bookmarks.list_bookmarks(conn.assigns.current_user.id)
-    render(conn, "index.html", bookmarks: bookmarks)
+    render(conn, "index.html", bookmarks: bookmarks, changeset: Bookmarks.change_mark(%Mark{}))
   end
 
-  def new(conn, _params) do
-    changeset = Bookmarks.change_mark(%Mark{})
-    render(conn, "new.html", changeset: changeset)
-  end
+#  def new(conn, _params) do
+#    changeset = Bookmarks.change_mark(%Mark{})
+#    render(conn, "new.html", changeset: changeset)
+#  end
 
   def create(conn, %{"mark" => mark_params}) do
-    case Bookmarks.create_mark(mark_params) do
+    params =
+      %{"hashed_url" => "test", "content" => "test", "title" => "test", "user_id" => conn.assigns.current_user.id}
+      |> Map.merge(mark_params)
+
+    IO.inspect(params)
+
+    case Bookmarks.create_mark(params) do
       {:ok, mark} ->
         conn
         |> put_flash(:info, "Mark created successfully.")
-        |> redirect(to: Routes.mark_path(conn, :show, mark))
+        |> redirect(to: Routes.mark_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "index.html", changeset: changeset)
     end
   end
 
