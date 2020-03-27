@@ -6,7 +6,7 @@ defmodule Updtr.Bookmarks do
   import Ecto.Query, warn: false
   alias Updtr.Repo
 
-  alias Updtr.Bookmarks.Mark
+  alias Updtr.Bookmarks.{Mark, Fetcher}
 
   @doc """
   Returns the list of bookmarks.
@@ -18,7 +18,9 @@ defmodule Updtr.Bookmarks do
 
   """
   def list_bookmarks(id) do
-    Mark |> where(user_id: ^id) |> Repo.all()
+    Mark
+    |> where(user_id: ^id)
+    |> Repo.all()
   end
 
   @doc """
@@ -50,9 +52,13 @@ defmodule Updtr.Bookmarks do
 
   """
   def create_mark(attrs \\ %{}) do
-    %Mark{}
-    |> Mark.changeset(attrs)
-    |> Repo.insert()
+    mark = %Mark{}
+           |> Mark.changeset(attrs)
+           |> Repo.insert()
+
+    {:ok, %{url: url}} = mark
+    Fetcher.fetch(url)
+    mark
   end
 
   @doc """

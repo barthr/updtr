@@ -18,8 +18,6 @@ defmodule UpdtrWeb.MarkController do
       %{"hashed_url" => "test", "content" => "test", "title" => "test", "user_id" => conn.assigns.current_user.id}
       |> Map.merge(mark_params)
 
-    IO.inspect(params)
-
     case Bookmarks.create_mark(params) do
       {:ok, _ } ->
         conn

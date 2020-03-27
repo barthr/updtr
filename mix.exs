@@ -45,7 +45,9 @@ defmodule Updtr.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:bcrypt_elixir, "~> 2.0"},
       {:guardian, "~> 2.0"},
-      {:bamboo, "~> 1.3"}
+      {:bamboo, "~> 1.3"},
+      {:tesla, "~> 1.3.0"},
+      {:floki, "~> 0.26.0"}
     ]
   end
 
