@@ -10,6 +10,8 @@ defmodule Updtr.Bookmarks.Mark do
     field :hashed_url, :string
     field :title, :string
     field :url, :string
+    field :description, :string
+    field :thumbnail, :string
 
     belongs_to(:user, User)
 
@@ -19,7 +21,7 @@ defmodule Updtr.Bookmarks.Mark do
   @doc false
   def changeset(mark, attrs) do
     mark
-    |> cast(attrs, [:title, :url, :hashed_url, :content, :user_id])
+    |> cast(attrs, [:title, :description, :thumbnail, :url, :hashed_url, :content, :user_id])
     |> foreign_key_constraint(:user_id)
     |> validate_required([:title, :url, :hashed_url, :content])
   end

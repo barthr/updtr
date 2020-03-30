@@ -46,6 +46,7 @@ defmodule Updtr.MixProject do
       {:bcrypt_elixir, "~> 2.0"},
       {:guardian, "~> 2.0"},
       {:bamboo, "~> 1.3"},
+      {:timex, "~> 3.5"},
       {:tesla, "~> 1.3.0"},
       {:floki, "~> 0.26.0"}
     ]

@@ -1,5 +1,5 @@
 <div class="ui grid">
-	<div class="ui segment centered divided column eight wide computer sixteen wide tablet">
+	<div class="ui segment centered divided column eight wide computer thirteen wide tablet">
 		<div class="ui fluid icon input large">
 			<input class="prompt" type="text" placeholder="Press '/' to search">
 			<i class="inverted circular search link icon"></i>
@@ -19,20 +19,28 @@
 	</div>
 
   <div class="row">
-		<div class="ui column centered twelve wide segment">
-			<div class="ui middle aligned divided list">
-          <%= for mark <- @bookmarks do %>
-          <div class="item" style="padding: 10px;">
-            <div class="right floated content">
-              <%= button "Delete", class: "ui icon red button", to: Routes.mark_path(@conn, :delete ,mark), method: :delete %>
-            </div>
-            <img class="ui avatar image" src="/images/img.png">
-            <div class="content">
-              <%= mark.url %>
-            </div>
-          </div>
-          <% end %>
-      </div>
+     <div class="ui cards centered">
+				<%= for mark <- @bookmarks do %>
+					<div class="card">
+						<div class="image">
+						</div>
+						<div class="content">
+							<div class="header"><%= mark.title %></div>
+							<div class="meta">
+								<span class="date">Created <%= Timex.from_now(mark.inserted_at) %></span>
+							</div>
+							<div class="description">
+								<%= mark.description %>
+							</div>
+						</div>
+						<div class="extra content">
+							<a>
+								<i class="globe icon"></i>
+								<%= mark.url %>
+							</a>
+						</div>
+					</div>
+				<% end %>
 		</div>
 	</div>
 </div>

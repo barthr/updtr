@@ -9,7 +9,8 @@ use Mix.Config
 
 config :updtr,
   ecto_repos: [Updtr.Repo],
-  generators: [binary_id: true]
+  generators: [binary_id: true],
+  static_path: "./images"
 
 # Add support for microseconds at the DB level
 # this avoids having to configure it on every migration file

@@ -52,13 +52,23 @@ defmodule Updtr.Bookmarks do
 
   """
   def create_mark(attrs \\ %{}) do
-    mark = %Mark{}
-           |> Mark.changeset(attrs)
-           |> Repo.insert()
+    attrs =
+      attrs
+      |> Map.new(fn {k, v} -> {String.to_atom(k), v} end)
 
-    {:ok, %{url: url}} = mark
-    Fetcher.fetch(url)
-    mark
+
+    attrs = Map.put_new(attrs, :hashed_url, :crypto.hash(:md5, attrs.url) |> Base.url_encode64())
+
+    case Fetcher.fetch(attrs) do
+      {:ok, fetched_values} ->
+        attrs = Map.merge(fetched_values, attrs)
+
+        %Mark{}
+        |> Mark.changeset(attrs)
+        |> Repo.insert()
+      {:error, cause} ->
+        {:error, "failed fetching web page #{attrs.url}"}
+    end
   end
 
   @doc """

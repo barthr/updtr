@@ -15,17 +15,22 @@ defmodule UpdtrWeb.MarkController do
 
   def create(conn, %{"mark" => mark_params}) do
     params =
-      %{"hashed_url" => "test", "content" => "test", "title" => "test", "user_id" => conn.assigns.current_user.id}
+      %{"user_id" => conn.assigns.current_user.id}
       |> Map.merge(mark_params)
 
     case Bookmarks.create_mark(params) do
-      {:ok, _ } ->
+      {:ok, _} ->
         conn
         |> put_flash(:info, "Mark created successfully.")
         |> redirect(to: Routes.mark_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         index(conn, %{changeset: changeset})
+
+      {:error, error} ->
+        conn
+        |> put_flash(:error, error)
+        |> redirect(to: Routes.mark_path(conn, :index))
     end
   end
 

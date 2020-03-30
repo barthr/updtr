@@ -19,7 +19,7 @@
 
 <body id="root">
   <%= render "_navigation.html", assigns %>
-  <div class="ui main container" style="margin-top: 7em">
+  <div class="ui main container main-container" style="">
     <%= render "_main-content.html", assigns %>
   </div>
   <%= render "_footer.html", assigns %>
