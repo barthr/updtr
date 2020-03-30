@@ -13,7 +13,7 @@ defmodule Updtr.Bookmarks.Fetcher do
           Map.put(attrs, :content, Floki.raw_html(html))
           |> extract_title(html)
           |> extract_description(html)
-          |> extract_image(html)
+#          |> extract_image(html)
 
         {:ok, resp}
       {:error, error} ->
@@ -61,7 +61,7 @@ defmodule Updtr.Bookmarks.Fetcher do
   end
 
   defp store_image(url, file_name) do
-    static_path = Application.get_env(:updtr, :static_path)
+    static_path = Application.get_env(:updtr, :media_path)
     {:ok, response} = HTTPClient.get(url)
 
     path = "#{static_path}/thumbnail_#{file_name}.jpeg"
