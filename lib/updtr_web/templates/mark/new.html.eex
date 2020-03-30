@@ -1,6 +1,0 @@
-<h1>New Mark</h1>
-
-
-<%= render "form.html", Map.put(assigns, :action, Routes.mark_path(@conn, :create)) %>
-
-<span><%= link "Back", to: Routes.mark_path(@conn, :index) %></span>

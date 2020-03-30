@@ -23,6 +23,15 @@ defmodule Updtr.Bookmarks do
     |> Repo.all()
   end
 
+  def search_bookmarks(search_term) do
+    query =
+      from m in Mark,
+           where: fragment("bookmark_text_ts @@ to_tsquery(?)", ^search_term),
+           order_by: fragment("ts_rank(bookmark_text_ts, to_tsquery(?)) DESC", ^search_term)
+
+    Repo.all(query)
+  end
+
   @doc """
   Gets a single mark.
 
@@ -54,10 +63,14 @@ defmodule Updtr.Bookmarks do
   def create_mark(attrs \\ %{}) do
     attrs =
       attrs
-      |> Map.new(fn {k, v} -> {String.to_atom(k), v} end)
+      |> Map.new(fn {k, v} -> {String.to_atom(k), String.trim(v)} end)
 
-
-    attrs = Map.put_new(attrs, :hashed_url, :crypto.hash(:md5, attrs.url) |> Base.url_encode64())
+    attrs = Map.put_new(
+      attrs,
+      :hashed_url,
+      :crypto.hash(:md5, attrs.url)
+      |> Base.url_encode64()
+    )
 
     case Fetcher.fetch(attrs) do
       {:ok, fetched_values} ->
