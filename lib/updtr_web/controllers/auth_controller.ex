@@ -14,6 +14,7 @@ defmodule UpdtrWeb.AuthController do
         conn
         |> Auth.Guardian.Plug.sign_in(user)
         |> put_flash(:info, "Welcome back #{user.email}")
+        |> put_session(:user_id, user.id)
         |> redirect(to: "/")
 
       {:error, :email_not_validated} ->

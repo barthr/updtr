@@ -12,6 +12,7 @@ defmodule UpdtrWeb.Router do
     plug :fetch_live_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :put_root_layout, {UpdtrWeb.LayoutView, :root}
   end
 
   pipeline :auth do
@@ -47,7 +48,7 @@ defmodule UpdtrWeb.Router do
     resources "/users", UserController, except: [:new, :edit], singleton: true
     resources "/marks", MarkController
 
-    live "/marks-live", MarkSearchController
+    live "/marks-live", MarkLive.Index
   end
 
   defp authenticate_user(conn, _) do
