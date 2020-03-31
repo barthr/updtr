@@ -20,10 +20,12 @@ defmodule UpdtrWeb do
   def controller do
     quote do
       use Phoenix.Controller, namespace: UpdtrWeb
+      import Phoenix.LiveView.Controller
 
       import Plug.Conn
       import UpdtrWeb.Gettext
       alias UpdtrWeb.Router.Helpers, as: Routes
+
     end
   end
 
@@ -35,6 +37,7 @@ defmodule UpdtrWeb do
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
+      import Phoenix.LiveView.Helpers
 
       use Phoenix.HTML
       import UpdtrWeb.ErrorHelpers
@@ -49,6 +52,7 @@ defmodule UpdtrWeb do
       use Phoenix.Router
       import Plug.Conn
       import Phoenix.Controller
+      import Phoenix.LiveView.Router
     end
   end
 

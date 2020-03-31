@@ -21,7 +21,10 @@ config :updtr, UpdtrWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "gsFJbSuUNQmnPHv4vx0xB3E0EdadZsZb/d0PwaoEUI/qd6Oij+QK6mvX/HwuWYQI",
   render_errors: [view: UpdtrWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: Updtr.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Updtr.PubSub, adapter: Phoenix.PubSub.PG2],
+  live_view: [
+    signing_salt: "cxCHI+Si0b9NZYeo1MgO6iLoHStqeYlF"
+  ]
 
 config :updtr, UpdtrWeb.Auth.Guardian,
   issuer: "updtr",

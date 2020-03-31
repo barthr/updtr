@@ -18,6 +18,8 @@
 		<% end %>
 	</div>
 
+	<%= live_render(@conn, UpdtrWeb.ClockDemo) %>
+
   <div class="row">
      <div class="ui cards centered">
 				<%= for mark <- @bookmarks do %>

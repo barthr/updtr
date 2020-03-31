@@ -1,5 +1,6 @@
 defmodule UpdtrWeb.Router do
   use UpdtrWeb, :router
+  import Phoenix.LiveView.Router
 
   if Mix.env() == :dev do
     forward "/sent_emails", Bamboo.SentEmailViewerPlug
@@ -8,7 +9,7 @@ defmodule UpdtrWeb.Router do
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
-    plug :fetch_flash
+    plug :fetch_live_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
@@ -45,6 +46,8 @@ defmodule UpdtrWeb.Router do
 
     resources "/users", UserController, except: [:new, :edit], singleton: true
     resources "/marks", MarkController
+
+    live "/marks-live", MarkSearchController
   end
 
   defp authenticate_user(conn, _) do

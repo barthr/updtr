@@ -33,10 +33,10 @@ defmodule Updtr.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.4.11"},
+      {:phoenix, "~> 1.4.16"},
       {:phoenix_pubsub, "~> 1.1"},
       {:phoenix_ecto, "~> 4.0"},
-      {:phoenix_html, "~> 2.11"},
+      {:phoenix_html, "~> 2.14"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:ecto_sql, "~> 3.1"},
       {:postgrex, ">= 0.0.0"},
@@ -48,7 +48,8 @@ defmodule Updtr.MixProject do
       {:bamboo, "~> 1.3"},
       {:timex, "~> 3.5"},
       {:tesla, "~> 1.3.0"},
-      {:floki, "~> 0.26.0"}
+      {:floki, "~> 0.26.0"},
+      {:phoenix_live_view, "~> 0.10.0"}
     ]
   end
 
