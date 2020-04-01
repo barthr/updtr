@@ -16,7 +16,7 @@ defmodule UpdtrWeb.Router do
   end
 
   scope "/", UpdtrWeb do
-    pipe_through [:browser, :auth]
+    pipe_through [:browser]
 
     resources "/auth", AuthController, only: [:create, :delete], singleton: true
 

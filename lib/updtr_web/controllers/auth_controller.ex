@@ -5,7 +5,7 @@ defmodule UpdtrWeb.AuthController do
   alias UpdtrWeb.Auth
 
   def new(conn, _) do
-    render(conn, "new.html")
+    render(conn, "login.html")
   end
 
   def create(conn, %{"user" => %{"email" => email, "password" => password}}) do

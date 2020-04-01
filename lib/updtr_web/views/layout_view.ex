@@ -5,6 +5,9 @@ defmodule UpdtrWeb.LayoutView do
   alias UpdtrWeb.Auth
 
   def authenticated?(conn) do
-    Auth.Guardian.Plug.authenticated?(conn)
+    case Plug.Conn.get_session(conn, :user_id) do
+      nil -> false
+      _ -> true
+    end
   end
 end

@@ -8,14 +8,9 @@ defmodule UpdtrWeb.UserController do
 
   require Logger
 
-  def show(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
-    render(conn, "show.json", user: user)
-  end
-
   def new(conn, _) do
     changeset = Accounts.change_user(%User{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "signup.html", changeset: changeset)
   end
 
   def create(conn, %{"user" => %{"email" => email, "password" => password}}) do
