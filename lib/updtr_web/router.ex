@@ -15,14 +15,6 @@ defmodule UpdtrWeb.Router do
     plug :put_root_layout, {UpdtrWeb.LayoutView, :root}
   end
 
-  pipeline :auth do
-    plug UpdtrWeb.Auth.Pipeline
-  end
-
-  pipeline :require_auth do
-    plug Guardian.Plug.EnsureAuthenticated
-  end
-
   scope "/", UpdtrWeb do
     pipe_through [:browser, :auth]
 
@@ -41,7 +33,7 @@ defmodule UpdtrWeb.Router do
   end
 
   scope "/", UpdtrWeb do
-    pipe_through [:browser, :auth, :require_auth, :authenticate_user]
+    pipe_through [:browser, :authenticate_user]
 
     get "/", PageController, :index
 
@@ -52,15 +44,15 @@ defmodule UpdtrWeb.Router do
   end
 
   defp authenticate_user(conn, _) do
-    case Guardian.Plug.current_resource(conn) do
+    case get_session(conn, :user_id) do
       nil ->
         conn
         |> put_flash(:error, "Login required")
         |> redirect(to: "/login")
         |> halt()
 
-      user ->
-        assign(conn, :current_user, user)
+      user_id ->
+        assign(conn, :current_user, Updtr.Accounts.get_user!(user_id))
     end
   end
 end

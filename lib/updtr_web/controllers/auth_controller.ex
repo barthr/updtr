@@ -12,9 +12,9 @@ defmodule UpdtrWeb.AuthController do
     case Accounts.authenticate_user(email, password) do
       {:ok, user} ->
         conn
-        |> Auth.Guardian.Plug.sign_in(user)
         |> put_flash(:info, "Welcome back #{user.email}")
         |> put_session(:user_id, user.id)
+        |> configure_session(renew: true)
         |> redirect(to: "/")
 
       {:error, :email_not_validated} ->
@@ -31,8 +31,7 @@ defmodule UpdtrWeb.AuthController do
 
   def delete(conn, _) do
     conn
-    |> put_flash(:info, "Succesfully logged out")
-    |> Auth.Guardian.Plug.sign_out()
+    |> put_flash(:info, "Successfully logged out")
     |> clear_session()
     |> redirect(to: Routes.auth_path(conn, :new))
   end

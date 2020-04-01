@@ -1,1 +1,22 @@
+<div class="ui centered grid">
+  <div class="sixteen wide mobile column eight wide computer">
+			<%= if live_flash(@flash, :error) do %>
+			<div class="ui message red transition">
+				<i class="close icon"></i>
+				<div class="header">
+				    <%= live_flash(@flash, :error) %>
+				</div>
+			</div>
+			<% end %>
+			<%= if live_flash(@flash, :success) do %>
+				<div class="ui message green transition">
+					<i class="close icon"></i>
+					<div class="header">
+							<%= live_flash(@flash, :success) %>
+					</div>
+				</div>
+			<% end %>
+	</div>
+</div>
+
 <%= @inner_content %>

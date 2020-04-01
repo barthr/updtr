@@ -44,7 +44,6 @@ defmodule Updtr.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:bcrypt_elixir, "~> 2.0"},
-      {:guardian, "~> 2.0"},
       {:bamboo, "~> 1.3"},
       {:timex, "~> 3.5"},
       {:tesla, "~> 1.3.0"},

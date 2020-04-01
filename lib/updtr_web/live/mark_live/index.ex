@@ -33,11 +33,7 @@ defmodule UpdtrWeb.MarkLive.Index do
         {:noreply, assign(socket, %{changeset: changeset})}
 
       {:error, error} ->
-        {
-          :noreply,
-          socket
-          |> put_flash(:error, error)
-        }
+        {:noreply, put_flash(socket, :error, error)}
     end
   end
 

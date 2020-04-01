@@ -1,7 +1,7 @@
 import "../css/app.scss";
 import "phoenix_html";
 
-import { Socket } from "phoenix"
+import {Socket} from "phoenix"
 import LiveSocket from "phoenix_live_view"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
@@ -15,14 +15,11 @@ window.$ = window.jQuery = $;
 
 require("../node_modules/semantic-ui-css/semantic.min");
 
-$(document).ready(function () {
-	$('.message .close')
-		.on('click', function () {
-			$(this)
-				.closest('.message')
-				.transition('fade')
-			;
-		})
-	;
-});
+$('.message .close')
+	.on('click', function () {
+		$(this)
+			.closest('.message')
+			.transition('fade')
+		;
+	});
 
