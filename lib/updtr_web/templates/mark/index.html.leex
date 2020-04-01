@@ -20,25 +20,31 @@
 
 
   <div class="row">
-     <div class="ui cards centered">
+     <div class="ui two stackable cards centered">
 				<%= for mark <- @bookmarks do %>
-					<div class="card">
-						<div class="image">
-						</div>
+					<div class="ui <%= random_color %> card">
 						<div class="content">
-							<div class="header"><%= mark.title %></div>
+							<i class="right floated trash red icon"></i>
+							<div class="header">
+								<%= mark.title %>
+								<i class="external small icon"></i>
+							</div>
 							<div class="meta">
-								<span class="date">Created <%= Timex.from_now(mark.inserted_at) %></span>
+								<span class="floated time">Created <%= Timex.from_now(mark.inserted_at) %></span>
 							</div>
 							<div class="description">
 								<%= mark.description %>
 							</div>
+
 						</div>
+
 						<div class="extra content">
-							<a>
-								<i class="globe icon"></i>
-								<%= mark.url %>
-							</a>
+							<i class="globe icon"></i>
+							<a href="<%= mark.url %>"><%= mark.url %></a>
+							<div class="ui bottom attached button">
+								<i class="edit icon"></i>
+								Edit Bookmark
+							</div>
 						</div>
 					</div>
 				<% end %>
