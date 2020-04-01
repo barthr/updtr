@@ -1,12 +1,21 @@
 <div class="ui grid">
 	<div class="ui segment centered divided column eight wide computer thirteen wide tablet">
-		<div class="ui fluid icon input large">
-			<input class="prompt" type="text" placeholder="Press '/' to search">
+		<form class="ui fluid icon input large" phx-submit="search">
+		  <%= text_input :search_field, :query, placeholder: "Press '/' to search", "phx-debounce": "300", class: "prompt" %>
 			<i class="inverted circular search link icon"></i>
-		</div>
+		</form>
 		<div class="ui horizontal divider">
 			Or
 		</div>
+		<%= form_for @changeset, "#", [phx_submit: :create], fn f -> %>
+			<div class="ui form fluid right labeled input">
+				<%= text_input f, :url, type: :url, required: true, placeholder: "https://www.example.com" %>
+				<%= submit class: "ui blue label icon button" do %>
+					<i class="add icon"></i>
+				<% end %>
+			</div>
+			<%= error_tag f, :url %>
+		<% end %>
 	</div>
 
 

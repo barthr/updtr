@@ -23,10 +23,11 @@ defmodule Updtr.Bookmarks do
     |> Repo.all()
   end
 
-  def search_bookmarks(search_term) do
+  def search(user_id, search_term) do
     query =
       from m in Mark,
            where: fragment("bookmark_text_ts @@ to_tsquery(?)", ^search_term),
+           where: m.user_id == ^user_id,
            order_by: fragment("ts_rank(bookmark_text_ts, to_tsquery(?)) DESC", ^search_term)
 
     Repo.all(query)
