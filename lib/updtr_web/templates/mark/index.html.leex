@@ -1,4 +1,4 @@
-<div class="ui grid">
+<div class="ui grid" style="margin-top: 4em; margin-bottom: 6em;">
   <div class="row">
 		<div class="ui segment centered divided column eight wide computer thirteen wide tablet">
 			<form class="ui fluid icon input large" phx-submit="search">
@@ -20,37 +20,31 @@
 		</div>
 	</div>
 
-
-	<div class="row">
-		<div class="ui two stackable cards">
-			<%= for mark <- @bookmarks do %>
-				<div class="ui card raised">
-					<div class="content">
-						<i class="right floated trash red icon"></i>
-						<i class="right floated star icon"></i>
-						<a class="header" href="<%= mark.url %>">
-							<%= mark.title %>
-							<i class="external small icon"></i>
-						</a>
-						<div class="meta">
-							<span class="floated time">Created <%= Timex.from_now(mark.inserted_at) %></span>
-						</div>
-						<div class="description">
-							<%= mark.description %>
-						</div>
-
+	<div class="ui two stackable cards" style="margin-top: 15px">
+		<%= for mark <- @bookmarks do %>
+			<div class="ui column card raised">
+				<div class="content">
+					<i class="right floated trash red icon"></i>
+					<i class="right floated star icon"></i>
+					<a class="header" href="<%= mark.url %>">
+						<%= mark.title %>
+						<i class="external small icon"></i>
+					</a>
+					<div class="description">
+						<%= mark.description %>
 					</div>
 
-					<div class="extra content">
-						<i class="globe icon"></i>
-						<a href="<%= mark.url %>"><%= base_url(mark.url) %></a>
-						<div class="right floated">
-						 <i class="calendar outline alternate icon"></i>
-						 <%= show_date(mark.inserted_at) %>
-						</div>
+				</div>
+
+				<div class="extra content">
+					<i class="globe icon"></i>
+					<a href="<%= mark.url %>"><%= base_url(mark.url) %></a>
+					<div class="right floated">
+					 <i class="calendar outline alternate icon"></i>
+					 <%= show_date(mark.inserted_at) %>
 					</div>
 				</div>
-			<% end %>
-		</div>
+			</div>
+		<% end %>
 	</div>
 </div>
