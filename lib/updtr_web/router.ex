@@ -38,9 +38,8 @@ defmodule UpdtrWeb.Router do
     get "/", PageController, :index
 
     resources "/users", UserController, except: [:new, :edit], singleton: true
-    resources "/marks", MarkController
 
-    live "/marks-live", MarkLive.Index
+    live "/marks", MarkLive.Index
   end
 
   defp authenticate_user(conn, _) do

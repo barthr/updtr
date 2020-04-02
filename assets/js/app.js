@@ -13,7 +13,7 @@ const jQuery = require('jquery');
 const $ = jQuery;
 window.$ = window.jQuery = $;
 
-require("../node_modules/semantic-ui-css/semantic.min");
+require("../node_modules/fomantic-ui-css/semantic.min");
 
 $('.message .close')
 	.on('click', function () {

@@ -3,6 +3,6 @@ defmodule UpdtrWeb.PageController do
 
   def index(conn, _params) do
     conn
-    |> redirect(to: Routes.mark_path(conn, :index))
+    |> redirect(to: "/marks")
   end
 end

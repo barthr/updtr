@@ -22,14 +22,17 @@
 
 	<div class="ui two stackable cards" style="margin-top: 15px">
 		<%= for mark <- @bookmarks do %>
-			<div class="ui column card raised">
+			<div class="ui card raised">
 				<div class="content">
 					<i class="right floated trash red icon"></i>
 					<i class="right floated star icon"></i>
 					<a class="header" href="<%= mark.url %>">
+
 						<%= mark.title %>
 						<i class="external small icon"></i>
 					</a>
+
+
 					<div class="description">
 						<%= mark.description %>
 					</div>
@@ -43,6 +46,7 @@
 					 <i class="calendar outline alternate icon"></i>
 					 <%= show_date(mark.inserted_at) %>
 					</div>
+
 				</div>
 			</div>
 		<% end %>
