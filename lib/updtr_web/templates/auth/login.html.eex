@@ -1,7 +1,7 @@
-<div class="ui two column doubling centered grid">
+<div class="ui two column doubling centered two grid">
 	<div class="column">
 		<h2 class="ui huge header">
-		    Sign in
+				Sign in
 		</h2>
 		<div class="ui attached message">
 			<div class="header">

@@ -1,13 +1,12 @@
 <div class="ui inverted fixed borderless huge menu">
 	<div class="ui container">
 		<a class="header item">Updtr</a>
-		<%= link raw(~s'<i class="grid layout icon home"></i> Home'), to: Routes.page_path(@conn, :index), class: "item" %>
-		<div class="right item">
+		<%= link raw(~s'<i class="icon home"></i> Home'), to: Routes.page_path(@conn, :index), class: "item" %>
+		<%= link raw(~s'<i class="tag icon"></i> Tags'), to: Routes.page_path(@conn, :index), class: "item" %>
 			<%= if authenticated?(@conn) do %>
-    		<%= link raw(~s'<i class="grid icon lock"></i> Log out'), to: Routes.auth_path(@conn, :delete), method: :delete%>
+    		<%= link raw(~s'<i class="grid icon lock"></i> Log out'), to: Routes.auth_path(@conn, :delete), method: :delete, class: "right item"%>
     	<% else %>
-    		<%= link raw(~s'<i class="grid icon unlock"></i> Log in'), to: Routes.auth_path(@conn, :new) %>
+    		<%= link raw(~s'<i class="grid icon unlock"></i> Log in'), to: Routes.auth_path(@conn, :new), class: "right item"%>
     	<% end %>
-		</div>
 	</div>
 </div>

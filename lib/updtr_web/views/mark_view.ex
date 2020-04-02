@@ -8,4 +8,12 @@ defmodule UpdtrWeb.MarkView do
       "brown", "grey", "black"
     ] |> Enum.random()
   end
+
+  def base_url(uri) do
+    URI.parse(uri).authority
+  end
+
+  def show_date(timestamp) do
+    Timex.format!(timestamp, "{D}-{M}-{YYYY}")
+  end
 end
