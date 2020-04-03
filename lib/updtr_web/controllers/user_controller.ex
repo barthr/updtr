@@ -37,7 +37,6 @@ defmodule UpdtrWeb.UserController do
     case Accounts.validate_email(token) do
       {:ok, user} ->
         conn
-        |> Auth.Guardian.Plug.sign_in(user)
         |> put_flash(:info, "Succesfully activated your account #{user.email}")
         |> redirect(to: "/")
 
